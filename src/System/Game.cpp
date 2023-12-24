@@ -40,7 +40,15 @@ void Game::update() {
 }
 
 void Game::render() {
-    this->window->clear(sf::Color::Black);
+    this->window->clear();
+
+    // 設定背景
+    sf::Texture texture;
+    if(!texture.loadFromFile("data/image/background.jpg")) {
+        std::cout << "Error: Could not load background texture" << std::endl;
+    }
+    sf::Sprite background(texture);
+    this->window->draw(background);
 
     this->player.render(this->window);
 
