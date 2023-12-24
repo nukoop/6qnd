@@ -9,11 +9,12 @@
 
 class Player {
 private:
-    sf::RectangleShape shape;
+    sf::Texture texture;
+    sf::Sprite sprite;
     float movementSpeed;
 
     void initVariables();
-    void initShape();
+    void initSprite();
 public:
     Player(float x = 0.f, float y = 0.f);
     virtual ~Player();
