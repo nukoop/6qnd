@@ -5,12 +5,7 @@ find_package(OpenGL)
 
 file(GLOB source_files
 	"src/*.cpp"
-	# "src/Blur/*.cpp"
-	# "src/LightEngine/*.cpp"
-	# "src/Props/*.cpp"
-	# "src/System/*.cpp"
-	# "src/UnitedEngine/*.cpp"
-	# "src/Weapons/*.cpp"
+	"src/System/*.cpp"
 )
 
 set(SOURCES ${source_files})
