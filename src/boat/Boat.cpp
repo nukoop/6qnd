@@ -9,6 +9,10 @@
 void Boat::initVariables() {
     this->movementSpeed = 10.f;
     this->scale = 10.f;
+    this->totalTime = 0.f;
+    this->switchTime = 0.2f;
+    this->curretImage = 1;
+    this->imageCount = 4;
 }
 
 void Boat::initSprite() {
@@ -36,6 +40,24 @@ Boat::Boat(float x, float y) {
 
 Boat::~Boat() {
 
+}
+
+// 動畫
+void Boat::animate(float deltaTime) {
+    this->totalTime += deltaTime;
+
+    if (this->totalTime >= this->switchTime) {
+        this->totalTime -= this->switchTime;
+        this->curretImage++;
+
+        if (this->curretImage > this->imageCount) {
+            this->curretImage = 1;
+        }
+
+        if(!this->texture.loadFromFile("data/image/Boat1_water_animation_color1/Boat1_water_frame" + std::to_string(this->curretImage) + ".png")) {
+            std::cout << "[錯誤] 讀取 data/image/Boat1_water_animation_color1/Boat1_water_frame" + std::to_string(this->curretImage) + ".png 圖片時發生了錯誤" << std::endl;
+        }
+    }
 }
 
 // 鍵盤輸入
@@ -73,8 +95,10 @@ void Boat::updateMouseInput(const sf::RenderWindow &window) {
     this->sprite.setRotation(rotation + 90);
 }
 
+
 void Boat::update(const sf::RenderWindow &window) {
     this->updateInput();
+    this->animate(this->clock.restart().asSeconds());
     // this->updateMouseInput(window);
 }
 
