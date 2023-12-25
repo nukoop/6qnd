@@ -21,3 +21,5 @@ Makefile
 
 build/
 CMakeFiles/
+
+.vscode/

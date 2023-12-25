@@ -46,7 +46,7 @@ void Game::render() {
     sf::Texture texture;
     texture.setRepeated(true);
     if(!texture.loadFromFile("data/image/Tileset/tile_0084_water11.png")) {
-        std::cout << "Error: Could not load water texture" << std::endl;
+        std::cout << "[錯誤] 讀取 data/image/Tileset/tile_0084_water11.png 圖片時發生了錯誤" << std::endl;
     }
     sf::Sprite background(texture);
     background.setTextureRect(sf::IntRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
