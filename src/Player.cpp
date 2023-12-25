@@ -12,7 +12,7 @@ void Player::initVariables() {
 }
 
 void Player::initSprite() {
-    if (!this->texture.loadFromFile("data/image/player/boat.png")) {
+    if (!this->texture.loadFromFile("data/image/Boat1_water_animation_color1/Boat1_water_frame1.png")) {
         std::cout << "Error: Could not load player texture" << std::endl;
     }
     this->sprite.setTexture(this->texture);
