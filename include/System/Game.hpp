@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "Player.hpp"
+#include "boat/Boat.hpp"
 
 class Game {
 private:
@@ -11,7 +11,7 @@ private:
     sf::VideoMode videoMode;
     sf::Event event;
 
-    Player player;
+    Boat player;
 
     void initVariables();
     void initWindow();

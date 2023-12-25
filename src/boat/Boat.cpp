@@ -1,19 +1,19 @@
 #include <iostream>
 #include <algorithm>
 
-#include "Player.hpp"
+#include "boat/Boat.hpp"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 
-void Player::initVariables() {
+void Boat::initVariables() {
     this->movementSpeed = 10.f;
     this->scale = 10.f;
 }
 
-void Player::initSprite() {
+void Boat::initSprite() {
     if (!this->texture.loadFromFile("data/image/Boat1_water_animation_color1/Boat1_water_frame1.png")) {
-        std::cout << "Error: Could not load player texture" << std::endl;
+        std::cout << "[錯誤] 讀取 data/image/Boat1_water_animation_color1/Boat1_water_frame1.png 圖片時發生了錯誤" << std::endl;
     }
     this->sprite.setTexture(this->texture);
     // this->sprite.setScale(this->scale, this->scale);
@@ -27,19 +27,19 @@ void Player::initSprite() {
     );
 }
 
-Player::Player(float x, float y) {
+Boat::Boat(float x, float y) {
     this->sprite.setPosition(x, y);
 
     this->initVariables();
     this->initSprite();
 }
 
-Player::~Player() {
+Boat::~Boat() {
 
 }
 
 // 鍵盤輸入
-void Player::updateInput() {
+void Boat::updateInput() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && this->sprite.getPosition().x > (0.f + std::max(this->sprite.getGlobalBounds().width, this->sprite.getGlobalBounds().height) / 2)) {
         this->sprite.move(-this->movementSpeed, 0.f);
         this->sprite.setRotation(90);
@@ -59,7 +59,7 @@ void Player::updateInput() {
 }
 
 // 面對滑鼠
-void Player::updateMouseInput(const sf::RenderWindow &window) {
+void Boat::updateMouseInput(const sf::RenderWindow &window) {
     sf::Vector2f curPos = this->sprite.getPosition();
     sf::Vector2i position = sf::Mouse::getPosition(window);
 
@@ -73,11 +73,11 @@ void Player::updateMouseInput(const sf::RenderWindow &window) {
     this->sprite.setRotation(rotation + 90);
 }
 
-void Player::update(const sf::RenderWindow &window) {
+void Boat::update(const sf::RenderWindow &window) {
     this->updateInput();
     // this->updateMouseInput(window);
 }
 
-void Player::render(sf::RenderTarget* target) {
+void Boat::render(sf::RenderTarget* target) {
     target->draw(this->sprite);
 }

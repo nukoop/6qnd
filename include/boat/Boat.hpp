@@ -1,5 +1,5 @@
-#ifndef PLAYER_HPP
-#define PLAYER_HPP
+#ifndef BOAT_HPP
+#define BOAT_HPP
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -7,7 +7,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
-class Player {
+class Boat {
 private:
     sf::Texture texture;
     sf::Sprite sprite;
@@ -17,8 +17,8 @@ private:
     void initVariables();
     void initSprite();
 public:
-    Player(float x = 0.f, float y = 0.f);
-    virtual ~Player();
+    Boat(float x = 0.f, float y = 0.f);
+    virtual ~Boat();
 
     void updateInput();
     void updateMouseInput(const sf::RenderWindow &window);
