@@ -4,6 +4,7 @@
 
 void Player::initVariables() {
     this->movementSpeed = 10.f;
+    this->scale = 3.f;
 }
 
 void Player::initSprite() {
@@ -11,7 +12,7 @@ void Player::initSprite() {
         std::cout << "Error: Could not load player texture" << std::endl;
     }
     this->sprite.setTexture(this->texture);
-    this->sprite.setScale(5.f, 5.f);
+    this->sprite.setScale(this->scale, this->scale);
 }
 
 Player::Player(float x, float y) {

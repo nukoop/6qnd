@@ -5,7 +5,7 @@ find_package(OpenGL)
 
 file(GLOB source_files
 	"src/*.cpp"
-	"src/System/*.cpp"
+	"src/system/*.cpp"
 )
 
 set(SOURCES ${source_files})
