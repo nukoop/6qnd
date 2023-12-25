@@ -12,6 +12,7 @@ private:
     sf::Texture texture;
     sf::Sprite sprite;
     float movementSpeed;
+    float scale;
 
     void initVariables();
     void initSprite();
