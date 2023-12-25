@@ -1,7 +1,7 @@
 #include "system/Game.hpp"
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 800
 
 void Game::initVariables() {
     this->window = nullptr;
@@ -36,7 +36,7 @@ void Game::pollEvent() {
 
 void Game::update() {
     this->pollEvent();
-    this->player.update(this->window);
+    this->player.update(*(this->window));
 }
 
 void Game::render() {
@@ -44,10 +44,12 @@ void Game::render() {
 
     // 設定背景
     sf::Texture texture;
-    if(!texture.loadFromFile("data/image/background.jpg")) {
-        std::cout << "Error: Could not load background texture" << std::endl;
+    texture.setRepeated(true);
+    if(!texture.loadFromFile("data/image/water.png")) {
+        std::cout << "Error: Could not load water texture" << std::endl;
     }
     sf::Sprite background(texture);
+    background.setTextureRect(sf::IntRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
     this->window->draw(background);
 
     this->player.render(this->window);
