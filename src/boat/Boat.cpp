@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-
+#include <cmath>
 #include "boat/Boat.hpp"
 
 #define WINDOW_WIDTH 800
