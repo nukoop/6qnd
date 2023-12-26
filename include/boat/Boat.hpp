@@ -6,6 +6,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+#include "weapon/Weapon.hpp"  // 包含射擊功能
 
 class Boat {
 private:
