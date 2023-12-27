@@ -80,8 +80,17 @@ void Boat::updateInput() {
         this->sprite.setRotation(0);
     }
 
-    this->cannon->sprite.setPosition(this->sprite.getPosition());
-    this->cannon->sprite.setRotation(this->sprite.getRotation());
+    if(this->sprite.getRotation() == 0) {
+        this->cannon->sprite.setPosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - 20);
+    } else if(this->sprite.getRotation() == 90) {
+        this->cannon->sprite.setPosition(this->sprite.getPosition().x + 20, this->sprite.getPosition().y + 2);
+    } else if(this->sprite.getRotation() == 180) {
+        this->cannon->sprite.setPosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y + 20);
+    } else if(this->sprite.getRotation() == 270) {
+        this->cannon->sprite.setPosition(this->sprite.getPosition().x - 20, this->sprite.getPosition().y - 2);
+    }
+    
+    // this->cannon->sprite.setRotation(this->sprite.getRotation());
 }
 
 // 面對滑鼠
@@ -102,7 +111,9 @@ void Boat::updateMouseInput(const sf::RenderWindow &window) {
 
 void Boat::update(const sf::RenderWindow &window) {
     this->updateInput();
+    this->cannon->updateMouseInput(window);
     this->animate(this->clock.restart().asSeconds());
+    this->cannon->animate(this->clock2.restart().asSeconds());
     // this->updateMouseInput(window);
 }
 

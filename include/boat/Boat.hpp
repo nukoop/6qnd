@@ -14,6 +14,7 @@ private:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Clock clock;
+    sf::Clock clock2;
 
     Cannon* cannon;
 

@@ -10,11 +10,10 @@
 
 class Cannon {
 private:
-    
-    
-protected:
-    
-
+    float totalTime;
+    float switchTime;
+    int imageCount;
+    int curretImage;
 public:
     sf::Texture texture;
     sf::Sprite sprite;
@@ -22,6 +21,8 @@ public:
     Cannon(float& x, float& y);
     ~Cannon();
 
+    void animate(float deltaTime);
+    void updateMouseInput(const sf::RenderWindow &window);
     void render(sf::RenderTarget* target);
 };
 
