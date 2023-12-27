@@ -21,9 +21,12 @@ private:
     Animation* animation;
 
     std::string path;
+    int defaultImage;
 
     void updateMouseInput(const sf::RenderWindow &window);
 public:
+    bool fire;
+
     Cannon(float x, float y, int imageCount, int defaultImage);
     ~Cannon();
     void update(const sf::RenderWindow &window);
