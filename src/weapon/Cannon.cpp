@@ -19,11 +19,15 @@ void Cannon::updateMouseInput(const sf::RenderWindow &window) {
     float rotation = (atan2(dy, dx)) * 180 / PI;
 
     this->sprite.setRotation(rotation + 90);
+    this->fireSprite.setRotation(rotation + 90);
 }
 
 Cannon::Cannon(float x, float y, int imageCount, int defaultImage) {
-    // 設置圖片位置
+    // 設置大砲圖片位置
     this->path = "data/image/Cannon2_color1/Cannon2_color1_";
+
+    // 設置砲火圖片位置
+    this->firePath = "data/image/Fire1/Fire1_";
 
     // 設置預設圖片
     this->defaultImage = defaultImage;
@@ -31,28 +35,42 @@ Cannon::Cannon(float x, float y, int imageCount, int defaultImage) {
     // 讀取所有圖片
     for(int i = 0; i < imageCount; i++) {
         sf::Texture texture;
+        sf::Texture fireTexture;
         if(!texture.loadFromFile(this->path + std::to_string(i + 1) + ".png")) {
             std::cout << "[錯誤] 讀取 " << this->path << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
         } else {
             this->textures.push_back(texture);
+        }
+
+        if(!fireTexture.loadFromFile(this->firePath + std::to_string(i + 1) + ".png")) {
+            std::cout << "[錯誤] 讀取 " << this->firePath << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
+        } else {
+            this->fireTextures.push_back(fireTexture);
         }
     }
 
     // 把圖片設置為預設圖片
     this->texture = this->textures[defaultImage - 1];
     this->sprite.setTexture(this->texture);
+    this->fireTexture = this->textures[defaultImage - 1];
+    this->fireSprite.setTexture(this->fireTexture);
 
     // 設定 Sprite 中心點
     this->sprite.setOrigin(
         66,
         44
     );
+    this->fireSprite.setOrigin(
+        34,
+        -36
+    );
 
     // 設置 Sprite 位置
     this->sprite.setPosition(x, y);
+    this->fireSprite.setPosition(x, y);
 
     // 設置動畫
-    this->animation = new Animation(0.1f, imageCount, defaultImage);
+    this->animation = new Animation(0.1f, imageCount, 2, defaultImage);
 
     // 把開火中設為否
     this->fire = false;
@@ -67,22 +85,24 @@ void Cannon::update(const sf::RenderWindow &window) {
     this->animation->update(this->clock.restart().asSeconds());
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         fire = true;
+        this->texture = this->textures[this->animation->current - 1];
+        this->fireTexture = this->fireTextures[this->animation->current - 1];
     } else {
         fire = false;
-        this->animation->current = defaultImage;
+        this->texture = this->textures[0];
+        this->fireTexture = this->fireTextures[0];
     }
-
-    this->texture = this->textures[this->animation->current - 1];
 }
 
 void Cannon::render(sf::RenderTarget* target) {
     target->draw(this->sprite);
+    target->draw(this->fireSprite);
 }
 
 void Cannon::setSpritePosition(float x, float y) {
     this->sprite.setPosition(x, y);
 }
 
-void Cannon::setSpriteRotation(float angle) {
-    this->sprite.setRotation(angle);
+void Cannon::setFireSpritePosition(float x, float y) {
+    this->fireSprite.setPosition(x, y);
 }

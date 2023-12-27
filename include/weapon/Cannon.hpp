@@ -16,11 +16,15 @@ private:
     sf::Texture texture;
     std::vector<sf::Texture> textures;
     sf::Sprite sprite;
+    sf::Texture fireTexture;
+    std::vector<sf::Texture> fireTextures;
+    sf::Sprite fireSprite;
     sf::Clock clock;
 
     Animation* animation;
 
     std::string path;
+    std::string firePath;
     int defaultImage;
 
     void updateMouseInput(const sf::RenderWindow &window);
@@ -32,7 +36,7 @@ public:
     void update(const sf::RenderWindow &window);
     void render(sf::RenderTarget* target);
     void setSpritePosition(float x, float y);
-    void setSpriteRotation(float angle);
+    void setFireSpritePosition(float x, float y);
 };
 
 #endif

@@ -1,10 +1,11 @@
 #include <iostream>
 #include "system/Animation.hpp"
 
-Animation::Animation(float switchTime, int amount, int current) {
+Animation::Animation(float switchTime, int amount, int minimum, int current) {
     this->totalTime = 0.f;
     this->switchTime = switchTime;
     this->amount = amount;
+    this->minimum = minimum;
     this->current = current;
 }
 
@@ -21,7 +22,7 @@ void Animation::update(float deltaTime) {
         this->current++;
 
         if (this->current > this->amount) {
-            this->current = 1;
+            this->current = minimum;
         }
     }
 }

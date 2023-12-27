@@ -12,8 +12,8 @@ Boat::Boat(float x, float y) {
     this->path = "data/image/Boat1_water_animation_color1/Boat1_water_frame";
 
     this->sprite.setPosition(x, y);
-    this->cannon = new Cannon(x, y, 3, 1);
-    this->animation = new Animation(0.2f, 4, 1);
+    this->cannon = new Cannon(x, y, 4, 1);
+    this->animation = new Animation(0.2f, 4, 1, 1);
 
     if (!this->texture.loadFromFile("data/image/Boat1_water_animation_color1/Boat1_water_frame1.png")) {
         std::cout << "[錯誤] 讀取 data/image/Boat1_water_animation_color1/Boat1_water_frame1.png 圖片時發生了錯誤" << std::endl;
@@ -55,12 +55,16 @@ void Boat::updateInput() {
 
     if(this->sprite.getRotation() == 0) {
         this->cannon->setSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - 20);
+        this->cannon->setFireSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - 20);
     } else if(this->sprite.getRotation() == 90) {
         this->cannon->setSpritePosition(this->sprite.getPosition().x + 20, this->sprite.getPosition().y + 2);
+        this->cannon->setFireSpritePosition(this->sprite.getPosition().x + 20, this->sprite.getPosition().y + 2);
     } else if(this->sprite.getRotation() == 180) {
         this->cannon->setSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y + 20);
+        this->cannon->setFireSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y + 20);
     } else if(this->sprite.getRotation() == 270) {
         this->cannon->setSpritePosition(this->sprite.getPosition().x - 20, this->sprite.getPosition().y - 2);
+        this->cannon->setFireSpritePosition(this->sprite.getPosition().x - 20, this->sprite.getPosition().y - 2);
     }
 }
 

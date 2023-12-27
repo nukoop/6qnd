@@ -14,10 +14,11 @@ private:
     float totalTime;
     float switchTime;
     int amount;
+    int minimum;
 public:
     int current;
 
-    Animation(float switchTime, int amount, int current);
+    Animation(float switchTime, int amount, int minimum, int current);
     ~Animation();
     void update(float deltaTime);
 };
