@@ -1,48 +1,6 @@
 #include <iostream>
 #include "weapon/Cannon.hpp"
 
-Cannon::Cannon(float& x, float& y) {
-    if (!this->texture.loadFromFile("data/image/Cannon2_color1/Cannon2_color1_1.png")) {
-        std::cout << "[錯誤] 讀取 data/image/Cannon2_color1/Cannon2_color1_1.png 圖片時發生了錯誤" << std::endl;
-    }
-    this->sprite.setTexture(this->texture);
-    this->sprite.setScale(1.f, 1.f);
-    this->sprite.setOrigin(
-        66,
-        44
-    );
-
-    this->sprite.setPosition(x, y);
-
-    this->switchTime = 0.1f;
-    this->totalTime = 0.f;
-    this->curretImage = 1;
-    this->imageCount = 3;
-}
-
-Cannon::~Cannon() {
-    std::cout << "Cannon destructor called" << std::endl;
-}
-
-// 動畫
-void Cannon::animate(float deltaTime) {
-    this->totalTime += deltaTime;
-
-    if (this->totalTime >= this->switchTime) {
-
-        this->totalTime -= this->switchTime;
-        this->curretImage++;
-
-        if (this->curretImage > this->imageCount) {
-            this->curretImage = 1;
-        }
-
-        if(!this->texture.loadFromFile("data/image/Cannon2_color1/Cannon2_color1_" + std::to_string(this->curretImage) + ".png")) {
-            std::cout << "[錯誤] 讀取 data/image/Cannon2_color1/Cannon2_color1_" + std::to_string(this->curretImage) + ".png 圖片時發生了錯誤" << std::endl;
-        }
-    }
-}
-
 // 面對滑鼠
 void Cannon::updateMouseInput(const sf::RenderWindow &window) {
     sf::Vector2f curPos = this->sprite.getPosition();
@@ -58,6 +16,57 @@ void Cannon::updateMouseInput(const sf::RenderWindow &window) {
     this->sprite.setRotation(rotation + 90);
 }
 
+Cannon::Cannon(float x, float y, int imageCount, int defaultImage) {
+    // 設置圖片位置
+    this->path = "data/image/Cannon2_color1/Cannon2_color1_";
+
+    // 讀取所有圖片
+    for(int i = 0; i < imageCount; i++) {
+        sf::Texture texture;
+        if(!texture.loadFromFile(this->path + std::to_string(i + 1) + ".png")) {
+            std::cout << "[錯誤] 讀取 " << this->path << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
+        } else {
+            this->textures.push_back(texture);
+        }
+    }
+
+    // 把圖片設置為預設圖片
+    this->texture = this->textures[defaultImage];
+    this->sprite.setTexture(this->texture);
+
+    // 設定 Sprite 中心點
+    this->sprite.setOrigin(
+        66,
+        44
+    );
+
+    // 設置 Sprite 位置
+    this->sprite.setPosition(x, y);
+
+    // 設置動畫
+    this->animation = new Animation(0.1f, imageCount, defaultImage);
+}
+
+Cannon::~Cannon() {
+    
+}
+
+void Cannon::update(const sf::RenderWindow &window) {
+    this->updateMouseInput(window);
+    this->animation->update(this->clock.restart().asSeconds());
+    if(!this->texture.loadFromFile(this->path + std::to_string(this->animation->current) + ".png")) {
+        std::cout << "[錯誤] 讀取 " << this->path << std::to_string(this->animation->current) << ".png 圖片時發生了錯誤" << std::endl;
+    }
+}
+
 void Cannon::render(sf::RenderTarget* target) {
     target->draw(this->sprite);
+}
+
+void Cannon::setSpritePosition(float x, float y) {
+    this->sprite.setPosition(x, y);
+}
+
+void Cannon::setSpriteRotation(float angle) {
+    this->sprite.setRotation(angle);
 }

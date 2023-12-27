@@ -8,32 +8,24 @@
 #include <SFML/Network.hpp>
 
 #include "weapon/Cannon.hpp"
+#include "system/Animation.hpp"
 
 class Boat {
 private:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Clock clock;
-    sf::Clock clock2;
 
     Cannon* cannon;
+    Animation* animation;
 
     float movementSpeed;
-    float scale;
-    float totalTime;
-    float switchTime;
-    int imageCount;
-    int curretImage;
-
-    void initVariables();
-    void initSprite();
+    std::string path;
 public:
-    Boat(float x = 0.f, float y = 0.f);
+    Boat(float x, float y);
     virtual ~Boat();
 
-    void animate(float deltaTime);
     void updateInput();
-    void updateMouseInput(const sf::RenderWindow &window);
     void update(const sf::RenderWindow &window);
     void render(sf::RenderTarget* target);
 };
