@@ -7,11 +7,16 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
+#include "weapon/Cannon.hpp"
+
 class Boat {
 private:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Clock clock;
+
+    Cannon* cannon;
+
     float movementSpeed;
     float scale;
     float totalTime;

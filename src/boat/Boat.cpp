@@ -33,6 +33,7 @@ void Boat::initSprite() {
 
 Boat::Boat(float x, float y) {
     this->sprite.setPosition(x, y);
+    this->cannon = new Cannon(x, y);
 
     this->initVariables();
     this->initSprite();
@@ -78,6 +79,9 @@ void Boat::updateInput() {
         this->sprite.move(0.f, this->movementSpeed);
         this->sprite.setRotation(0);
     }
+
+    this->cannon->sprite.setPosition(this->sprite.getPosition());
+    this->cannon->sprite.setRotation(this->sprite.getRotation());
 }
 
 // 面對滑鼠
@@ -104,4 +108,5 @@ void Boat::update(const sf::RenderWindow &window) {
 
 void Boat::render(sf::RenderTarget* target) {
     target->draw(this->sprite);
+    target->draw(this->cannon->sprite);
 }
