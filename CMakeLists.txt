@@ -7,6 +7,7 @@ file(GLOB source_files
 	"src/*.cpp"
 	"src/system/*.cpp"
    "src/boat/*.cpp"
+   "src/weapon/*.cpp"
 )
 
 set(SOURCES ${source_files})

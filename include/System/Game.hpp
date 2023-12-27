@@ -11,10 +11,7 @@ private:
     sf::VideoMode videoMode;
     sf::Event event;
 
-    Boat player;
-
-    void initVariables();
-    void initWindow();
+    Boat* player;
 public:
     Game();
     virtual ~Game();
