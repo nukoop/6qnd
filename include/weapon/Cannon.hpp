@@ -10,6 +10,7 @@
 #include <SFML/Network.hpp>
 
 #include "system/Animation.hpp"
+#include "weapon/Bullet.hpp"
 
 class Cannon {
 private:
@@ -22,6 +23,13 @@ private:
     sf::Clock clock;
 
     Animation* animation;
+
+    Bullet b1;
+    std::vector<Bullet> bullets;
+    sf::Vector2f playerCnter;
+    sf::Vector2f mousePosWindow;
+    sf::Vector2f aimDir;
+    sf::Vector2f aimDirNorm;
 
     std::string path;
     std::string firePath;

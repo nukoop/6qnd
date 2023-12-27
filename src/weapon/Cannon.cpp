@@ -81,22 +81,39 @@ Cannon::~Cannon() {
 }
 
 void Cannon::update(const sf::RenderWindow &window) {
+    this->playerCnter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
+    this->mousePosWindow = sf::Vector2f(sf::Mouse::getPosition(window));
+    this->aimDir = this->mousePosWindow - this->playerCnter;
+    this->aimDirNorm = this->aimDir / std::sqrt(this->aimDir.x * this->aimDir.x + this->aimDir.y * this->aimDir.y);
+
     this->updateMouseInput(window);
     this->animation->update(this->clock.restart().asSeconds());
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         fire = true;
         this->texture = this->textures[this->animation->current - 1];
         this->fireTexture = this->fireTextures[this->animation->current - 1];
+
+        this->b1.shape.setPosition(this->playerCnter);
+        this->b1.currVelocity = this->aimDirNorm * this->b1.maxSpeed;
+        this->bullets.push_back(Bullet(this->b1));
     } else {
         fire = false;
         this->texture = this->textures[0];
         this->fireTexture = this->fireTextures[0];
+    }
+
+    for(size_t i = 0; i < bullets.size(); i++){
+        this->bullets[i].shape.move(this->bullets[i].currVelocity);
     }
 }
 
 void Cannon::render(sf::RenderTarget* target) {
     target->draw(this->sprite);
     target->draw(this->fireSprite);
+
+    for(size_t i = 0; i < bullets.size(); i++){
+        target->draw(bullets[i].shape);
+    }
 }
 
 void Cannon::setSpritePosition(float x, float y) {
