@@ -7,7 +7,7 @@
 #define WINDOW_HEIGHT 800
 
 void Boat::initVariables() {
-    this->movementSpeed = 10.f;
+    this->movementSpeed = 2.f;
     this->scale = 10.f;
     this->totalTime = 0.f;
     this->switchTime = 0.2f;
