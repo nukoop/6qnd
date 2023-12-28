@@ -1,11 +1,15 @@
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 #include "weapon/Cannon.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 800
 
 // 面對滑鼠
 void Cannon::updateMouseInput(const sf::RenderWindow &window) {
@@ -97,6 +101,21 @@ void Cannon::update(const sf::RenderWindow &window) {
 
     this->updateMouseInput(window);
     this->animation->update(this->clock.restart().asSeconds());
+
+    // 子彈回收
+    int now = 0;
+    int end = this->bullets.size() - 1;
+
+    while(now != end && end > 0) {
+        if(bullets[now].sprite.getPosition().x < 0 || bullets[now].sprite.getPosition().x > WINDOW_WIDTH || bullets[now].sprite.getPosition().y < 0 || bullets[now].sprite.getPosition().y > WINDOW_HEIGHT) {
+            bullets.erase(bullets.begin() + now);
+            end--;
+            now = 0;
+            continue;
+        }
+        now++;
+    }
+
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         fire = true;
         this->texture = this->textures[this->animation->current - 1];
