@@ -1,17 +1,10 @@
 #include <iostream>
 #include <cmath>
-#include <algorithm>
 #include "weapon/Cannon.hpp"
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 
-// 面對滑鼠
 void Cannon::updateMouseInput(const sf::RenderWindow &window) {
     sf::Vector2f curPos = this->sprite.getPosition();
     sf::Vector2i position = sf::Mouse::getPosition(window);
@@ -25,89 +18,63 @@ void Cannon::updateMouseInput(const sf::RenderWindow &window) {
 
     this->sprite.setRotation(rotation + 90);
     this->fireSprite.setRotation(rotation + 90);
-    this->bullet.sprite.setRotation(rotation + 90);
+    this->bullet.setRotation(rotation + 90);
 }
 
-Cannon::Cannon(float x, float y, int imageCount, int defaultImage) {
-    // 設置大砲圖片位置
-    this->path = "data/image/Cannon2_color1/Cannon2_color1_";
+Cannon::Cannon(float x, float y, float fireRate, std::string path, float originX, float originY, std::string firePath, std::string fireSoundPath, float fireOriginX, float fireOriginY, std::string bulletPath, float bulletMaxSpeed, float bulletScale, int imageCount, int defaultImage, int animationMinimum)
+:   bullet(bulletPath),
+    animation(fireRate, imageCount, animationMinimum, defaultImage) {
+    // 設置大砲
+    this->sprite.setPosition(x, y);
+    this->fireRate = fireRate;
+    this->sprite.setOrigin(originX, originY);
 
-    // 設置砲火圖片位置
-    this->firePath = "data/image/Fire1/Fire1_";
-
-    // 設置預設圖片
-    this->defaultImage = defaultImage;
+    // 設置砲火
+    this->fireSprite.setPosition(x, y);
+    if(!this->fireSoundBuffer.loadFromFile(fireSoundPath)) {
+        std::cout << "[錯誤] 讀取 " << fireSoundPath << " 音訊時發生了錯誤" << std::endl;
+    }
+    this->fireSound.setBuffer(this->fireSoundBuffer);
+    this->fireSprite.setOrigin(fireOriginX, fireOriginY);
 
     // 讀取所有圖片
+    this->defaultImage = defaultImage;
     for(int i = 0; i < imageCount; i++) {
         sf::Texture texture;
         sf::Texture fireTexture;
-        if(!texture.loadFromFile(this->path + std::to_string(i + 1) + ".png")) {
-            std::cout << "[錯誤] 讀取 " << this->path << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
+        if(!texture.loadFromFile(path + std::to_string(i + 1) + ".png")) {
+            std::cout << "[錯誤] 讀取 " << path << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
         } else {
             this->textures.push_back(texture);
         }
 
-        if(!fireTexture.loadFromFile(this->firePath + std::to_string(i + 1) + ".png")) {
-            std::cout << "[錯誤] 讀取 " << this->firePath << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
+        if(!fireTexture.loadFromFile(firePath + std::to_string(i + 1) + ".png")) {
+            std::cout << "[錯誤] 讀取 " << firePath << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
         } else {
             this->fireTextures.push_back(fireTexture);
         }
     }
 
-    // 把圖片設置為預設圖片
+    // 把大砲和砲火的圖片設置為預設圖片
     this->texture = this->textures[defaultImage - 1];
     this->sprite.setTexture(this->texture);
     this->fireTexture = this->textures[defaultImage - 1];
     this->fireSprite.setTexture(this->fireTexture);
-
-    // 設定 Sprite 中心點
-    this->sprite.setOrigin(
-        66,
-        44
-    );
-    this->fireSprite.setOrigin(
-        34,
-        -36
-    );
-
-    // 設置 Sprite 位置
-    this->sprite.setPosition(x, y);
-    this->fireSprite.setPosition(x, y);
-
-    // 設置動畫
-    this->animation = new Animation(0.1f, imageCount, 2, defaultImage);
-
-    // 把開火中設為否
-    this->fire = false;
-
-    // 設置射速
-    this->fireRate = 0.1f;
-
-    // 設置開火音效
-    this->fireSoundBuffer.loadFromFile("data/sound/cannon1.wav");
-    this->fireSound.setBuffer(this->fireSoundBuffer);
 }
 
 Cannon::~Cannon() {
-    
+
 }
 
 void Cannon::update(const sf::RenderWindow &window) {
-    sf::Vector2f playerCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
-    this->mousePosWindow = sf::Vector2f(sf::Mouse::getPosition(window));
-    this->aimDir = this->mousePosWindow - playerCenter;
-    this->aimDirNorm = this->aimDir / std::sqrt(this->aimDir.x * this->aimDir.x + this->aimDir.y * this->aimDir.y);
-
     this->updateMouseInput(window);
-    this->animation->update(this->clock.restart().asSeconds());
+    this->animation.update(this->clock.restart().asSeconds());
 
     // 子彈回收
     int now = 0;
     int end = this->bullets.size() - 1;
-
     while(now != end && end > 0) {
-        if(bullets[now].sprite.getPosition().x < 0 || bullets[now].sprite.getPosition().x > WINDOW_WIDTH || bullets[now].sprite.getPosition().y < 0 || bullets[now].sprite.getPosition().y > WINDOW_HEIGHT) {
+        if(bullets[now].getPosition().x < 0 || bullets[now].getPosition().x > WINDOW_WIDTH || bullets[now].getPosition().y < 0 || bullets[now].getPosition().y > WINDOW_HEIGHT) {
             bullets.erase(bullets.begin() + now);
             end--;
             now = 0;
@@ -116,44 +83,46 @@ void Cannon::update(const sf::RenderWindow &window) {
         now++;
     }
 
+    // 發射砲彈
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        fire = true;
-        this->texture = this->textures[this->animation->current - 1];
-        this->fireTexture = this->fireTextures[this->animation->current - 1];
+        this->cannonCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
+        this->mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
+        this->aimDirection = this->mousePosition - this->cannonCenter;
+        this->aimDirNorm = this->aimDirection / std::sqrt(this->aimDirection.x * this->aimDirection.x + this->aimDirection.y * this->aimDirection.y);
 
-        if(bulletClock.getElapsedTime().asSeconds() > fireRate) {
-            bulletClock.restart();
+        this->texture = this->textures[this->animation.current - 1];
+        this->fireTexture = this->fireTextures[this->animation.current - 1];
 
-            this->bullet.sprite.setPosition(
+        if(this->bulletClock.getElapsedTime().asSeconds() > this->fireRate) {
+            this->bulletClock.restart();
+            this->bullet.setPosition(
                 this->sprite.getPosition().x,
                 this->sprite.getPosition().y
             );
-            this->bullet.currVelocity = this->aimDirNorm * this->bullet.maxSpeed;
+            this->bullet.setCurrentVelocity(this->aimDirNorm * this->bullet.getMaxSpeed());
 
             // 第一顆子彈
-            this->bullet.sprite.setOrigin(
+            this->bullet.setOrigin(
                 200,
                 -1000
             );
             this->bullets.push_back(Bullet(this->bullet));
             
             // 第二顆子彈
-            this->bullet.sprite.setOrigin(
+            this->bullet.setOrigin(
                 50,
                 -1000
             );
             this->bullets.push_back(Bullet(this->bullet));
-
             this->fireSound.play();
         }
     } else {
-        fire = false;
         this->texture = this->textures[0];
         this->fireTexture = this->fireTextures[0];
     }
 
     for(size_t i = 0; i < bullets.size(); i++){
-        this->bullets[i].sprite.move(this->bullets[i].currVelocity);
+        this->bullets[i].move();
     }
 }
 
@@ -162,7 +131,7 @@ void Cannon::render(sf::RenderTarget* target) {
     target->draw(this->fireSprite);
 
     for(size_t i = 0; i < bullets.size(); i++){
-        target->draw(bullets[i].sprite);
+        bullets[i].render(target);
     }
 }
 

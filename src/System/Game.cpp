@@ -1,11 +1,11 @@
 #include "system/Game.hpp"
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 800
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
 
-Game::Game() {
+Game::Game()
+:   player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 2.f, 0.2f, "data/image/Boat1_water_animation_color3/Boat1_water_frame", 4, 1) {
     this->window = nullptr;
-    this->player = new Boat(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 4, 1);
 
     this->videoMode = sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT);
     this->window = new sf::RenderWindow(videoMode, "6qnd", sf::Style::Default);
@@ -30,7 +30,7 @@ void Game::pollEvent() {
 
 void Game::update() {
     this->pollEvent();
-    this->player->update(*(this->window));
+    this->player.update(*(this->window));
 }
 
 void Game::render() {
@@ -46,7 +46,7 @@ void Game::render() {
     background.setTextureRect(sf::IntRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
     this->window->draw(background);
 
-    this->player->render(this->window);
+    this->player.render(this->window);
 
     this->window->display();
 }

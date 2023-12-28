@@ -8,22 +8,20 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 
-Boat::Boat(float x, float y, int imageCount, int defaultImage) {
-    this->movementSpeed = 2.f;
-    this->path = "data/image/Boat1_water_animation_color1/Boat1_water_frame";
-    this->imageCount = imageCount;
+Boat::Boat(float x, float y, float movementSpeed, float switchTime, std::string path, int imageCount, int defaultImage)
+:   cannon(x, y, 0.1f, "data/image/Cannon2_color3/Cannon2_color3_", 66, 44, "data/image/Fire1/Fire1_", "data/sound/cannon1.wav", 34, -36, "data/image/Bullet/bullet.png", 15.f, 0.07f, 4, 1, 2),
+    animation(switchTime, imageCount, defaultImage, defaultImage) {
+    this->movementSpeed = movementSpeed;
     this->defaultImage = defaultImage;
 
     this->sprite.setPosition(x, y);
-    this->cannon = new Cannon(x, y, 4, 1);
-    this->animation = new Animation(0.2f, 4, 1, 1);
 
     // 讀取所有圖片
     for(int i = 0; i < imageCount; i++) {
         sf::Texture texture;
         sf::Texture fireTexture;
-        if(!texture.loadFromFile(this->path + std::to_string(i + 1) + ".png")) {
-            std::cout << "[錯誤] 讀取 " << this->path << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
+        if(!texture.loadFromFile(path + std::to_string(i + 1) + ".png")) {
+            std::cout << "[錯誤] 讀取 " << path << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
         } else {
             this->textures.push_back(texture);
         }
@@ -36,10 +34,6 @@ Boat::Boat(float x, float y, int imageCount, int defaultImage) {
     this->sprite.setOrigin(
         this->sprite.getGlobalBounds().width / 2,
         this->sprite.getGlobalBounds().height / 2
-    );
-    this->sprite.setPosition(
-        WINDOW_WIDTH / 2,
-        WINDOW_HEIGHT / 2
     );
 }
 
@@ -67,30 +61,30 @@ void Boat::updateInput() {
     }
 
     if(this->sprite.getRotation() == 0) {
-        this->cannon->setSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - 20);
-        this->cannon->setFireSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - 20);
+        this->cannon.setSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - 20);
+        this->cannon.setFireSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - 20);
     } else if(this->sprite.getRotation() == 90) {
-        this->cannon->setSpritePosition(this->sprite.getPosition().x + 20, this->sprite.getPosition().y + 2);
-        this->cannon->setFireSpritePosition(this->sprite.getPosition().x + 20, this->sprite.getPosition().y + 2);
+        this->cannon.setSpritePosition(this->sprite.getPosition().x + 20, this->sprite.getPosition().y + 2);
+        this->cannon.setFireSpritePosition(this->sprite.getPosition().x + 20, this->sprite.getPosition().y + 2);
     } else if(this->sprite.getRotation() == 180) {
-        this->cannon->setSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y + 20);
-        this->cannon->setFireSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y + 20);
+        this->cannon.setSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y + 20);
+        this->cannon.setFireSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y + 20);
     } else if(this->sprite.getRotation() == 270) {
-        this->cannon->setSpritePosition(this->sprite.getPosition().x - 20, this->sprite.getPosition().y - 2);
-        this->cannon->setFireSpritePosition(this->sprite.getPosition().x - 20, this->sprite.getPosition().y - 2);
+        this->cannon.setSpritePosition(this->sprite.getPosition().x - 20, this->sprite.getPosition().y - 2);
+        this->cannon.setFireSpritePosition(this->sprite.getPosition().x - 20, this->sprite.getPosition().y - 2);
     }
 }
 
 void Boat::update(const sf::RenderWindow &window) {
     this->updateInput();
     
-    this->animation->update(this->clock.restart().asSeconds());
-    this->texture = this->textures[this->animation->current - 1];
+    this->animation.update(this->clock.restart().asSeconds());
+    this->texture = this->textures[this->animation.current - 1];
     
-    this->cannon->update(window);
+    this->cannon.update(window);
 }
 
 void Boat::render(sf::RenderTarget* target) {
     target->draw(this->sprite);
-    this->cannon->render(target);
+    this->cannon.render(target);
 }

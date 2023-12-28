@@ -19,15 +19,13 @@ private:
     sf::Sprite sprite;
     sf::Clock clock;
 
-    Cannon* cannon;
-    Animation* animation;
+    Cannon cannon;
+    Animation animation;
 
     float movementSpeed;
-    std::string path;
-    int imageCount;
     int defaultImage;
 public:
-    Boat(float x, float y, int imageCount, int defaultImage);
+    Boat(float x, float y, float movementSpeed, float switchTime, std::string path, int imageCount, int defaultImage);
     virtual ~Boat();
 
     void updateInput();
