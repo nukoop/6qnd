@@ -1,7 +1,7 @@
 #include "system/Game.hpp"
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 800
 
 Game::Game()
 :   player(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 2.f, 0.2f, "data/image/Boat1_water_animation_color3/Boat1_water_frame", 4, 1) {
