@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "weapon/Cannon.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
