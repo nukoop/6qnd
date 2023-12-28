@@ -1,6 +1,8 @@
 #ifndef BOAT_HPP
 #define BOAT_HPP
 
+#include <vector>
+
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -13,6 +15,7 @@
 class Boat {
 private:
     sf::Texture texture;
+    std::vector<sf::Texture> textures;
     sf::Sprite sprite;
     sf::Clock clock;
 
@@ -21,8 +24,10 @@ private:
 
     float movementSpeed;
     std::string path;
+    int imageCount;
+    int defaultImage;
 public:
-    Boat(float x, float y);
+    Boat(float x, float y, int imageCount, int defaultImage);
     virtual ~Boat();
 
     void updateInput();

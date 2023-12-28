@@ -1,25 +1,38 @@
 #include <iostream>
 #include <algorithm>
 #include <cmath>
+#include <vector>
 #include "boat/Boat.hpp"
 #include "system/Animation.hpp"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 
-Boat::Boat(float x, float y) {
+Boat::Boat(float x, float y, int imageCount, int defaultImage) {
     this->movementSpeed = 2.f;
     this->path = "data/image/Boat1_water_animation_color1/Boat1_water_frame";
+    this->imageCount = imageCount;
+    this->defaultImage = defaultImage;
 
     this->sprite.setPosition(x, y);
     this->cannon = new Cannon(x, y, 4, 1);
     this->animation = new Animation(0.2f, 4, 1, 1);
 
-    if (!this->texture.loadFromFile("data/image/Boat1_water_animation_color1/Boat1_water_frame1.png")) {
-        std::cout << "[錯誤] 讀取 data/image/Boat1_water_animation_color1/Boat1_water_frame1.png 圖片時發生了錯誤" << std::endl;
+    // 讀取所有圖片
+    for(int i = 0; i < imageCount; i++) {
+        sf::Texture texture;
+        sf::Texture fireTexture;
+        if(!texture.loadFromFile(this->path + std::to_string(i + 1) + ".png")) {
+            std::cout << "[錯誤] 讀取 " << this->path << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
+        } else {
+            this->textures.push_back(texture);
+        }
     }
 
+    // 把圖片設置為預設圖片
+    this->texture = this->textures[defaultImage - 1];
     this->sprite.setTexture(this->texture);
+
     this->sprite.setOrigin(
         this->sprite.getGlobalBounds().width / 2,
         this->sprite.getGlobalBounds().height / 2
@@ -72,9 +85,7 @@ void Boat::update(const sf::RenderWindow &window) {
     this->updateInput();
     
     this->animation->update(this->clock.restart().asSeconds());
-    if(!this->texture.loadFromFile(this->path + std::to_string(this->animation->current) + ".png")) {
-        std::cout << "[錯誤] 讀取 " << this->path << std::to_string(this->animation->current) << ".png 圖片時發生了錯誤" << std::endl;
-    }
+    this->texture = this->textures[this->animation->current - 1];
     
     this->cannon->update(window);
 }
