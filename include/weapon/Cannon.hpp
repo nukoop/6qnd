@@ -24,12 +24,16 @@ private:
 
     Animation* animation;
 
-    Bullet b1;
+    sf::Clock bulletClock;
+    Bullet bullet;
     std::vector<Bullet> bullets;
-    sf::Vector2f playerCnter;
     sf::Vector2f mousePosWindow;
     sf::Vector2f aimDir;
     sf::Vector2f aimDirNorm;
+    float fireRate;
+
+    sf::SoundBuffer fireSoundBuffer;
+    sf::Sound fireSound;
 
     std::string path;
     std::string firePath;

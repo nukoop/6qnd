@@ -5,7 +5,7 @@
 
 Game::Game() {
     this->window = nullptr;
-    this->player = new Boat(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+    this->player = new Boat(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 4, 1);
 
     this->videoMode = sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT);
     this->window = new sf::RenderWindow(videoMode, "6qnd", sf::Style::Default);
