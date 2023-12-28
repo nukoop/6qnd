@@ -32,6 +32,9 @@ private:
     sf::Vector2f aimDirNorm;
     float fireRate;
 
+    sf::SoundBuffer fireSoundBuffer;
+    sf::Sound fireSound;
+
     std::string path;
     std::string firePath;
     int defaultImage;

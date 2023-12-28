@@ -77,7 +77,11 @@ Cannon::Cannon(float x, float y, int imageCount, int defaultImage) {
     this->fire = false;
 
     // 設置射速
-    this->fireRate = 0.05f;
+    this->fireRate = 0.1f;
+
+    // 設置開火音效
+    this->fireSoundBuffer.loadFromFile("data/sound/cannon1.wav");
+    this->fireSound.setBuffer(this->fireSoundBuffer);
 }
 
 Cannon::~Cannon() {
@@ -119,6 +123,8 @@ void Cannon::update(const sf::RenderWindow &window) {
                 -1000
             );
             this->bullets.push_back(Bullet(this->bullet));
+
+            this->fireSound.play();
         }
     } else {
         fire = false;
