@@ -2,25 +2,24 @@
 #include <algorithm>
 #include <cmath>
 #include "boat/Boat.hpp"
+#include "system/Animation.hpp"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 
-void Boat::initVariables() {
-    this->movementSpeed = 10.f;
-    this->scale = 10.f;
-    this->totalTime = 0.f;
-    this->switchTime = 0.2f;
-    this->curretImage = 1;
-    this->imageCount = 4;
-}
+Boat::Boat(float x, float y) {
+    this->movementSpeed = 2.f;
+    this->path = "data/image/Boat1_water_animation_color1/Boat1_water_frame";
 
-void Boat::initSprite() {
+    this->sprite.setPosition(x, y);
+    this->cannon = new Cannon(x, y, 4, 1);
+    this->animation = new Animation(0.2f, 4, 1, 1);
+
     if (!this->texture.loadFromFile("data/image/Boat1_water_animation_color1/Boat1_water_frame1.png")) {
         std::cout << "[錯誤] 讀取 data/image/Boat1_water_animation_color1/Boat1_water_frame1.png 圖片時發生了錯誤" << std::endl;
     }
+
     this->sprite.setTexture(this->texture);
-    // this->sprite.setScale(this->scale, this->scale);
     this->sprite.setOrigin(
         this->sprite.getGlobalBounds().width / 2,
         this->sprite.getGlobalBounds().height / 2
@@ -31,33 +30,8 @@ void Boat::initSprite() {
     );
 }
 
-Boat::Boat(float x, float y) {
-    this->sprite.setPosition(x, y);
-
-    this->initVariables();
-    this->initSprite();
-}
-
 Boat::~Boat() {
 
-}
-
-// 動畫
-void Boat::animate(float deltaTime) {
-    this->totalTime += deltaTime;
-
-    if (this->totalTime >= this->switchTime) {
-        this->totalTime -= this->switchTime;
-        this->curretImage++;
-
-        if (this->curretImage > this->imageCount) {
-            this->curretImage = 1;
-        }
-
-        if(!this->texture.loadFromFile("data/image/Boat1_water_animation_color1/Boat1_water_frame" + std::to_string(this->curretImage) + ".png")) {
-            std::cout << "[錯誤] 讀取 data/image/Boat1_water_animation_color1/Boat1_water_frame" + std::to_string(this->curretImage) + ".png 圖片時發生了錯誤" << std::endl;
-        }
-    }
 }
 
 // 鍵盤輸入
@@ -78,30 +52,34 @@ void Boat::updateInput() {
         this->sprite.move(0.f, this->movementSpeed);
         this->sprite.setRotation(0);
     }
+
+    if(this->sprite.getRotation() == 0) {
+        this->cannon->setSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - 20);
+        this->cannon->setFireSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - 20);
+    } else if(this->sprite.getRotation() == 90) {
+        this->cannon->setSpritePosition(this->sprite.getPosition().x + 20, this->sprite.getPosition().y + 2);
+        this->cannon->setFireSpritePosition(this->sprite.getPosition().x + 20, this->sprite.getPosition().y + 2);
+    } else if(this->sprite.getRotation() == 180) {
+        this->cannon->setSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y + 20);
+        this->cannon->setFireSpritePosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y + 20);
+    } else if(this->sprite.getRotation() == 270) {
+        this->cannon->setSpritePosition(this->sprite.getPosition().x - 20, this->sprite.getPosition().y - 2);
+        this->cannon->setFireSpritePosition(this->sprite.getPosition().x - 20, this->sprite.getPosition().y - 2);
+    }
 }
-
-// 面對滑鼠
-void Boat::updateMouseInput(const sf::RenderWindow &window) {
-    sf::Vector2f curPos = this->sprite.getPosition();
-    sf::Vector2i position = sf::Mouse::getPosition(window);
-
-    const float PI = 3.14159265;
-
-    float dx = curPos.x - position.x;
-    float dy = curPos.y - position.y;
-
-    float rotation = (atan2(dy, dx)) * 180 / PI;
-
-    this->sprite.setRotation(rotation + 90);
-}
-
 
 void Boat::update(const sf::RenderWindow &window) {
     this->updateInput();
-    this->animate(this->clock.restart().asSeconds());
-    // this->updateMouseInput(window);
+    
+    this->animation->update(this->clock.restart().asSeconds());
+    if(!this->texture.loadFromFile(this->path + std::to_string(this->animation->current) + ".png")) {
+        std::cout << "[錯誤] 讀取 " << this->path << std::to_string(this->animation->current) << ".png 圖片時發生了錯誤" << std::endl;
+    }
+    
+    this->cannon->update(window);
 }
 
 void Boat::render(sf::RenderTarget* target) {
     target->draw(this->sprite);
+    this->cannon->render(target);
 }

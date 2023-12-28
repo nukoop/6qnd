@@ -3,19 +3,13 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
 
-void Game::initVariables() {
+Game::Game() {
     this->window = nullptr;
-}
+    this->player = new Boat(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
-void Game::initWindow() {
     this->videoMode = sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT);
     this->window = new sf::RenderWindow(videoMode, "6qnd", sf::Style::Default);
     this->window->setFramerateLimit(60);
-}
-
-Game::Game() {
-    this->initVariables();
-    this->initWindow();
 }
 
 Game::~Game() {
@@ -36,7 +30,7 @@ void Game::pollEvent() {
 
 void Game::update() {
     this->pollEvent();
-    this->player.update(*(this->window));
+    this->player->update(*(this->window));
 }
 
 void Game::render() {
@@ -52,7 +46,7 @@ void Game::render() {
     background.setTextureRect(sf::IntRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
     this->window->draw(background);
 
-    this->player.render(this->window);
+    this->player->render(this->window);
 
     this->window->display();
 }
