@@ -9,13 +9,19 @@
 
 class Bullet{
 public:
-    sf::CircleShape shape;
+    sf::Texture texture;
+    sf::Sprite sprite;
+    // sf::CircleShape shape;
     sf::Vector2f currVelocity;
     float maxSpeed;
 
     Bullet(float radius = 5.f) : currVelocity(0.f, 0.f), maxSpeed(15.f) {
-        this->shape.setRadius(radius);
-        this->shape.setFillColor(sf::Color::Red);
+        this->texture.loadFromFile("data/image/Bullet/bullet.png");
+        this->sprite.setTexture(texture);
+        this->sprite.setScale(0.07f, 0.07f);
+
+        // this->shape.setRadius(radius);
+        // this->shape.setFillColor(sf::Color::Red);
     }
 };
 

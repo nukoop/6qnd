@@ -20,6 +20,7 @@ void Cannon::updateMouseInput(const sf::RenderWindow &window) {
 
     this->sprite.setRotation(rotation + 90);
     this->fireSprite.setRotation(rotation + 90);
+    this->bullet.sprite.setRotation(rotation + 90);
 }
 
 Cannon::Cannon(float x, float y, int imageCount, int defaultImage) {
@@ -74,6 +75,9 @@ Cannon::Cannon(float x, float y, int imageCount, int defaultImage) {
 
     // 把開火中設為否
     this->fire = false;
+
+    // 設置射速
+    this->fireRate = 0.05f;
 }
 
 Cannon::~Cannon() {
@@ -81,9 +85,9 @@ Cannon::~Cannon() {
 }
 
 void Cannon::update(const sf::RenderWindow &window) {
-    this->playerCnter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
+    sf::Vector2f playerCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
     this->mousePosWindow = sf::Vector2f(sf::Mouse::getPosition(window));
-    this->aimDir = this->mousePosWindow - this->playerCnter;
+    this->aimDir = this->mousePosWindow - playerCenter;
     this->aimDirNorm = this->aimDir / std::sqrt(this->aimDir.x * this->aimDir.x + this->aimDir.y * this->aimDir.y);
 
     this->updateMouseInput(window);
@@ -93,9 +97,29 @@ void Cannon::update(const sf::RenderWindow &window) {
         this->texture = this->textures[this->animation->current - 1];
         this->fireTexture = this->fireTextures[this->animation->current - 1];
 
-        this->b1.shape.setPosition(this->playerCnter);
-        this->b1.currVelocity = this->aimDirNorm * this->b1.maxSpeed;
-        this->bullets.push_back(Bullet(this->b1));
+        if(bulletClock.getElapsedTime().asSeconds() > fireRate) {
+            bulletClock.restart();
+
+            this->bullet.sprite.setPosition(
+                this->sprite.getPosition().x,
+                this->sprite.getPosition().y
+            );
+            this->bullet.currVelocity = this->aimDirNorm * this->bullet.maxSpeed;
+
+            // 第一顆子彈
+            this->bullet.sprite.setOrigin(
+                200,
+                -1000
+            );
+            this->bullets.push_back(Bullet(this->bullet));
+            
+            // 第二顆子彈
+            this->bullet.sprite.setOrigin(
+                50,
+                -1000
+            );
+            this->bullets.push_back(Bullet(this->bullet));
+        }
     } else {
         fire = false;
         this->texture = this->textures[0];
@@ -103,7 +127,7 @@ void Cannon::update(const sf::RenderWindow &window) {
     }
 
     for(size_t i = 0; i < bullets.size(); i++){
-        this->bullets[i].shape.move(this->bullets[i].currVelocity);
+        this->bullets[i].sprite.move(this->bullets[i].currVelocity);
     }
 }
 
@@ -112,7 +136,7 @@ void Cannon::render(sf::RenderTarget* target) {
     target->draw(this->fireSprite);
 
     for(size_t i = 0; i < bullets.size(); i++){
-        target->draw(bullets[i].shape);
+        target->draw(bullets[i].sprite);
     }
 }
 
