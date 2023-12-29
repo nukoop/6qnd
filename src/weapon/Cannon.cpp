@@ -5,6 +5,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+#include <cmath>
 
 // 面對滑鼠
 void Cannon::updateMouseInput(const sf::RenderWindow &window) {

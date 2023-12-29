@@ -1,40 +1,62 @@
 #include <iostream>
-#include <vector>
-#include <math.h>
-#include <cmath>
 
 #include <system/Game.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
+#include "GUI/main_menu.hpp"
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 800
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
-using namespace sf;
-/*int main()
+int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Window");  //測試子彈用
     // 初始化遊戲
+    MainMenu mainMenu(WINDOW_WIDTH, WINDOW_HEIGHT);
     Game game;
+    bool inMainMenu = true;
 
-    //子彈測試
-    Bullet b1(0.1);
-    std::vector<Bullet> bullets;
-    bullets.push_back(Bullet(b1));
-
-    // 只要視窗還沒關閉就一直執行
     while (game.running()) {
-        // 更新遊戲
-        game.update();
+        if (inMainMenu) {
+            // 處理主選單的輸入
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                mainMenu.MoveUp();
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+                mainMenu.MoveDown();
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+                int selection = mainMenu.MainMenuPressed();
+                // 根據選擇的項目執行相應的操作
+                if (selection == 0) {
+                    // 開始遊戲
+                    inMainMenu = false;
+                    game.start();
+                }
+                else if (selection == 1) {
+                    // 顯示遊戲選項
+                }
+                else if (selection == 2) {
+                    // 顯示關於遊戲的資訊
+                }
+                else if (selection == 3) {
+                    // 退出遊戲
+                    game.quit();
+                }
+            }
+            // 渲染主選單
+            sf::RenderWindow* window = game.getWindow();
+            mainMenu.render(*window);
+            window->display();
+        }
+        else {
+            // 更新遊戲
+            game.update();
 
-        // 渲染遊戲
-        game.render();
-
+            // 渲染遊戲
+            game.render();
+        }
     }
 
     return 0;
-}*/
-
+}
+/*
 class Bullet{
 public:
     sf::CircleShape shape;
@@ -117,4 +139,4 @@ int main(){
 
         window.display();
     }
-}
+}*/

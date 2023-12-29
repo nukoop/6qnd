@@ -21,6 +21,11 @@ public:
     void pollEvent();
     void update();
     void render();
+
+    //GUI test
+    void quit();
+    sf::RenderWindow* getWindow();
+    void start();
 };
 
 #endif

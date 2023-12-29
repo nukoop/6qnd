@@ -50,3 +50,27 @@ void Game::render() {
 
     this->window->display();
 }
+
+//GUI test
+void Game::quit() {
+    // 做一些清理工作或其他必要的操作
+    window->close();
+}
+
+sf::RenderWindow* Game::getWindow() {
+    return window;
+}
+
+void Game::start() {
+    // 執行遊戲開始的相關邏輯
+    // 例如初始化遊戲狀態、載入資源等
+
+    // 開始遊戲的主迴圈
+    while (running()) {
+        // 更新遊戲邏輯
+        update();
+
+        // 渲染遊戲畫面
+        render();
+    }
+}
