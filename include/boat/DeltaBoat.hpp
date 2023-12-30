@@ -3,6 +3,7 @@
 
 #include "boat/Boat.hpp"
 #include "weapon/AlphaCannon.hpp"
+#include "weapon/DeltaCannon.hpp"
 
 class DeltaBoat : public Boat {
 public:

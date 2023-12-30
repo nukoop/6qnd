@@ -10,6 +10,7 @@
 #include "boat/GammaBoat.hpp"
 #include "boat/DeltaBoat.hpp"
 #include "weapon/AlphaCannon.hpp"
+#include "weapon/DeltaCannon.hpp"
 #include "weapon/SimpleCannonBall.hpp"
 
 class Game {
@@ -19,7 +20,7 @@ private:
     sf::Event event;
 
     SimpleCannonBall simpleCannonBall;
-    AlphaCannon alphaCannon;
+    DeltaCannon deltaCannon;
     DeltaBoat player;
 public:
     Game();

@@ -6,6 +6,8 @@ DeltaBoat::DeltaBoat(float x, float y, float movementSpeed, Cannon* cannon, Cann
     // 設置大砲中心點
     if(const AlphaCannon* alphaCannonPtr = dynamic_cast<const AlphaCannon*>(cannon)) {
         cannon->setOrigin(66, 44);
+    } else if(const DeltaCannon* DeltaCannonPtr = dynamic_cast<const DeltaCannon*>(cannon)) {
+        cannon->setOrigin(61, 29);
     } else {
         cannon->setOrigin(64, 64);
     }
@@ -36,9 +38,19 @@ void DeltaBoat::updateRotation() {
         } else if(this->sprite.getRotation() == 90) {
             this->cannon->setPosition(this->sprite.getPosition().x + 10, this->sprite.getPosition().y + 0);
         } else if(this->sprite.getRotation() == 180) {
-            this->cannon->setPosition(this->sprite.getPosition().x + 0, this->sprite.getPosition().y + 10);
+            this->cannon->setPosition(this->sprite.getPosition().x - 0, this->sprite.getPosition().y + 10);
         } else if(this->sprite.getRotation() == 270) {
             this->cannon->setPosition(this->sprite.getPosition().x - 10, this->sprite.getPosition().y - 0);
+        }
+    } else if(const DeltaCannon* DeltaCannonPtr = dynamic_cast<const DeltaCannon*>(cannon)) {
+        if(this->sprite.getRotation() == 0) {
+            this->cannon->setPosition(this->sprite.getPosition().x + (-2), this->sprite.getPosition().y - 10);
+        } else if(this->sprite.getRotation() == 90) {
+            this->cannon->setPosition(this->sprite.getPosition().x + 10, this->sprite.getPosition().y + (-2));
+        } else if(this->sprite.getRotation() == 180) {
+            this->cannon->setPosition(this->sprite.getPosition().x - (-2), this->sprite.getPosition().y + 10);
+        } else if(this->sprite.getRotation() == 270) {
+            this->cannon->setPosition(this->sprite.getPosition().x - 10, this->sprite.getPosition().y - (-2));
         }
     } else {
 
