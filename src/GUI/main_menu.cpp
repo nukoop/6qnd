@@ -9,30 +9,30 @@ MainMenu::MainMenu(float width, float height){
     //Play
     mainMenu[0].setFont(font);
     mainMenu[0].setFillColor(sf::Color::White);
-    mainMenu[0].setString("Play");
+    mainMenu[0].setString(L"開始遊戲");  //要加 L 前綴才能正常顯示中文
     mainMenu[0].setCharacterSize(70);
-    mainMenu[0].setPosition(400, 200);
+    mainMenu[0].setPosition(300, 200);
 
     //Options
     mainMenu[1].setFont(font);
     mainMenu[1].setFillColor(sf::Color::White);
-    mainMenu[1].setString("Options");
+    mainMenu[1].setString(L"遊戲設定");
     mainMenu[1].setCharacterSize(70);
-    mainMenu[1].setPosition(400, 300);
+    mainMenu[1].setPosition(300, 300);
 
     //About
     mainMenu[2].setFont(font);
     mainMenu[2].setFillColor(sf::Color::White);
-    mainMenu[2].setString("About");
+    mainMenu[2].setString(L"關於遊戲");
     mainMenu[2].setCharacterSize(70);
-    mainMenu[2].setPosition(400, 400);
+    mainMenu[2].setPosition(300, 400);
 
     //Exit
     mainMenu[3].setFont(font);
     mainMenu[3].setFillColor(sf::Color::White);
-    mainMenu[3].setString("Exit");
+    mainMenu[3].setString(L"結束遊戲");
     mainMenu[3].setCharacterSize(70);
-    mainMenu[3].setPosition(400, 500);
+    mainMenu[3].setPosition(300, 500);
 
     MainMenuSelected = 0;
 }
