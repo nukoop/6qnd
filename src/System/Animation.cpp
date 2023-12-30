@@ -1,4 +1,3 @@
-#include <iostream>
 #include "system/Animation.hpp"
 
 Animation::Animation(float switchTime, int amount, int minimum, int current) {
