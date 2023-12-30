@@ -22,7 +22,7 @@ public:
     void update();
     void render();
 
-    //GUI test
+    //GUI
     void quit();
     sf::RenderWindow* getWindow();
     void start();

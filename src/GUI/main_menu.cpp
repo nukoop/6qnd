@@ -2,7 +2,7 @@
 #include "GUI/main_menu.hpp"
 
 MainMenu::MainMenu(float width, float height){
-    if(!font.loadFromFile("data/AlexandriaFLF.ttf")){
+    if(!font.loadFromFile("data/font/Cubic_11_1.100_R.ttf")){
         std::cout << "無法載入字型檔案" << std::endl;
     }
 
