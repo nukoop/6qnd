@@ -1,6 +1,10 @@
 #ifndef CANNON_HPP
 #define CANNON_HPP
 
+#include <iostream>
+#include <cstdlib>
+#include <cmath>
+#include <string>
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>

@@ -1,7 +1,3 @@
-#include <iostream>
-#include <cstdlib>
-#include <cmath>
-#include <string>
 #include "weapon/Cannon.hpp"
 
 void Cannon::updateMouseInput(const sf::RenderWindow &window) {

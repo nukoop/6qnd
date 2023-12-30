@@ -1,6 +1,7 @@
 #ifndef SIMPLE_CANNON_BALL_HPP
 #define SIMPLE_CANNON_BALL_HPP
 
+#include <iostream>
 #include "weapon/CannonBall.hpp"
 
 class SimpleCannonBall : public CannonBall {

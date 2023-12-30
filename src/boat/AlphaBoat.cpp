@@ -1,5 +1,4 @@
 #include "boat/AlphaBoat.hpp"
-#include "weapon/AlphaCannon.hpp"
 
 AlphaBoat::AlphaBoat(float x, float y, float movementSpeed, Cannon* cannon, CannonBall* cannonBall)
     : Boat(x, y, movementSpeed, cannon, cannonBall, 0.2f, 4, 1, 1) {

@@ -1,6 +1,7 @@
 #ifndef CANNON_BALL_HPP
 #define CANNON_BALL_HPP
 
+#include <iostream>
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>

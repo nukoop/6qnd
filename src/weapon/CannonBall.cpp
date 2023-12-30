@@ -1,4 +1,3 @@
-#include <iostream>
 #include "weapon/CannonBall.hpp"
 
 CannonBall::CannonBall(float maxSpeed, float scale) {

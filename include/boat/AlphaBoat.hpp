@@ -2,6 +2,7 @@
 #define ALPHA_BOAT_HPP
 
 #include "boat/Boat.hpp"
+#include "weapon/AlphaCannon.hpp"
 
 class AlphaBoat : public Boat {
 public:

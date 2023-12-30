@@ -1,5 +1,4 @@
 #include "boat/Boat.hpp"
-#include "system/Animation.hpp"
 
 Boat::Boat(float x, float y, float movementSpeed, Cannon* cannon, CannonBall* cannonBall, float frameSwitchTime, int frameAmount, int frameMinimum, int frameDefault)
     : animation(frameSwitchTime, frameAmount, frameMinimum, frameDefault) {

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "weapon/SimpleCannonBall.hpp"
 
 SimpleCannonBall::SimpleCannonBall(float maxSpeed, float scale)
