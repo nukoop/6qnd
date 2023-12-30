@@ -1,5 +1,5 @@
-#ifndef BULLET_HPP
-#define BULLET_HPP
+#ifndef CANNON_BALL_HPP
+#define CANNON_BALL_HPP
 
 #include <string>
 #include <SFML/Graphics.hpp>
@@ -8,24 +8,27 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
-class Bullet {
-private:
+class CannonBall {
+protected:
     sf::Texture texture;
     sf::Sprite sprite;
-    std::string path;
     float maxSpeed;
     float scale;
     sf::Vector2f currentVelocity;
 public:
-    Bullet(std::string path, float maxSpeed = 15.f, float scale = 0.07f, sf::Vector2f currentVelocity = {0.0, 0.0});
-    ~Bullet();
+    CannonBall(float maxSpeed = 15.f, float scale = 0.07f);
+    virtual ~CannonBall() {}
     void setOrigin(float x, float y);
+    sf::Vector2f getOrigin();
     void setCurrentVelocity(sf::Vector2f currentVelocity);
+    sf::Vector2f getCurrentVelocity();
     void setRotation(float angle);
+    float getRotation();
     void setPosition(float x, float y);
-    float getMaxSpeed();
     sf::Vector2f getPosition();
-    void move();
+    void setMaxSpeed(float maxSpeed);
+    float getMaxSpeed();
+    void update();
     void render(sf::RenderTarget* target); 
 };
 

@@ -8,19 +8,15 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 #include "system/Animation.hpp"
-#include "weapon/Bullet.hpp"
+#include "weapon/CannonBall.hpp"
 
 class Cannon {
-private:
+protected:
     // 大砲
     sf::Texture texture;
     std::vector<sf::Texture> textures;
     sf::Sprite sprite;
     float fireRate;
-    sf::Vector2f cannonCenter;
-    sf::Vector2f mousePosition;
-    sf::Vector2f aimDirection;
-    sf::Vector2f aimDirNorm;
 
     // 砲火
     sf::Texture fireTexture;
@@ -29,23 +25,35 @@ private:
     sf::SoundBuffer fireSoundBuffer;
     sf::Sound fireSound;
     // 砲彈
-    Bullet bullet;
-    std::vector<Bullet> bullets;
-    sf::Clock bulletClock;
+    CannonBall* cannonBallTemplate;
+    std::vector<CannonBall*> cannonBalls;
+    sf::Clock cannonBallClock;
 
     // 大砲和砲火的動畫（同步）
     Animation animation;
+    int frameDefault;
     sf::Clock clock;
-    int defaultImage;
+
+    // 控制相關
+    bool isFire;
+    bool isFaceToMouse;
 
     void updateMouseInput(const sf::RenderWindow &window);
+    virtual void fire(const sf::RenderWindow& window) = 0;
 public:
-    Cannon(float x, float y, float fireRate, std::string path, float originX, float originY, std::string firePath, std::string fireSoundPath, float fireOriginX, float fireOriginY, std::string bulletPath, float bulletMaxSpeed, float bulletScale, int imageCount, int defaultImage, int animationMinimum);
-    ~Cannon();
-    void update(const sf::RenderWindow &window);
+    // Cannon(float x, float y, float fireRate, std::string path, float originX, float originY, std::string firePath, std::string fireSoundPath, float fireOriginX, float fireOriginY, std::string bulletPath, float bulletMaxSpeed, float bulletScale, int imageCount, int defaultImage, int animationMinimum);
+    Cannon(float x, float y, CannonBall* cannonBallTemplate, float fireRate, int frameAmount, int frameMinimum, int frameDefault, bool isFaceToMouse = false);
+    virtual ~Cannon() {}
+    void setPosition(float x, float y);
+    sf::Vector2f getPosition();
+    void setOrigin(float x, float y);
+    sf::Vector2f getOrigin();
+    void setIsFire(bool isFire);
+    bool getIsFire();
+    // void setFireSpritePosition(float x, float y);
+    // sf::Vector2f getFireSpritePosition();
+    void update(const sf::RenderWindow& window);
     void render(sf::RenderTarget* target);
-    void setSpritePosition(float x, float y);
-    void setFireSpritePosition(float x, float y);
 };
 
 #endif
