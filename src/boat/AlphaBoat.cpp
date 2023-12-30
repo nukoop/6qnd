@@ -36,7 +36,7 @@ void AlphaBoat::updateRotation() {
         } else if(this->sprite.getRotation() == 90) {
             this->cannon->setPosition(this->sprite.getPosition().x + 20, this->sprite.getPosition().y + 2);
         } else if(this->sprite.getRotation() == 180) {
-            this->cannon->setPosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y + 20);
+            this->cannon->setPosition(this->sprite.getPosition().x - 2, this->sprite.getPosition().y + 20);
         } else if(this->sprite.getRotation() == 270) {
             this->cannon->setPosition(this->sprite.getPosition().x - 20, this->sprite.getPosition().y - 2);
         }

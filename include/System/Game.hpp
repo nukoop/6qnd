@@ -6,6 +6,9 @@
 #include <string>
 
 #include "boat/AlphaBoat.hpp"
+#include "boat/BetaBoat.hpp"
+#include "boat/GammaBoat.hpp"
+#include "boat/DeltaBoat.hpp"
 #include "weapon/AlphaCannon.hpp"
 #include "weapon/SimpleCannonBall.hpp"
 
@@ -17,7 +20,7 @@ private:
 
     SimpleCannonBall simpleCannonBall;
     AlphaCannon alphaCannon;
-    AlphaBoat player;
+    DeltaBoat player;
 public:
     Game();
     virtual ~Game();
