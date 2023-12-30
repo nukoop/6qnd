@@ -5,8 +5,11 @@
 int main()
 {
     // 設置環境變數
-    setenv("WINDOW_WIDTH", "800", 1);
-    setenv("WINDOW_HEIGHT", "800", 1);
+    char widthEnv[] = "WINDOW_WIDTH=800";
+    char heightEnv[] = "WINDOW_HEIGHT=800";
+    putenv(widthEnv);
+    putenv(heightEnv);
+
     // 初始化遊戲
     Game game;
 
