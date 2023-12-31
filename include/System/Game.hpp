@@ -12,6 +12,7 @@
 #include "weapon/AlphaCannon.hpp"
 #include "weapon/BetaCannon.hpp"
 #include "weapon/DeltaCannon.hpp"
+#include "weapon/GammaCannon.hpp"
 #include "weapon/SimpleCannonBall.hpp"
 
 class Game {
@@ -28,6 +29,9 @@ private:
     //AlphaBoat player;
     BetaCannon betaCannon;
     BetaBoat player;
+    //GammaCannon gammaCannon;
+    ///GammaBoat player;
+    
 public:
     Game();
     virtual ~Game();

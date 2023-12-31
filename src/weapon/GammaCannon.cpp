@@ -4,7 +4,7 @@ GammaCannon::GammaCannon(float x, float y, CannonBall* cannonBallTemplate, float
     : Cannon(x, y, cannonBallTemplate, fireRate, 4, 2, 1, isFaceToMouse) {
 
     // 設置中心點
-    this->fireSprite.setOrigin(64, 0);
+    this->fireSprite.setOrigin(128, 128); //20.-25
     
     // 讀取所有圖片
     for(int i = 0; i < 4; i++) {

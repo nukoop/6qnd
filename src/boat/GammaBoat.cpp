@@ -5,9 +5,9 @@ GammaBoat::GammaBoat(float x, float y, float movementSpeed, Cannon* cannon, Cann
     
     // 設置大砲中心點
     if(const AlphaCannon* alphaCannonPtr = dynamic_cast<const AlphaCannon*>(cannon)) {
-        cannon->setOrigin(66, 44);
+        cannon->setOrigin(33, 22);
     } else {
-        cannon->setOrigin(64, 64);
+        cannon->setOrigin(33, 22);
     }
 
     // 讀取所有圖片

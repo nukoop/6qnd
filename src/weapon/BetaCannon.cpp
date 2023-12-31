@@ -65,15 +65,6 @@ void BetaCannon::fire(const sf::RenderWindow& window) {
             -1000
         );
         this->cannonBalls.push_back(cannonBall);
-
-        CannonBall* cannonBall2 = new CannonBall(*cannonBall);
-        
-        // 第二顆子彈
-        cannonBall2->setOrigin(
-            50,
-            -1000
-        );
-        this->cannonBalls.push_back(cannonBall2);
         this->fireSound.play();
     }
 }
