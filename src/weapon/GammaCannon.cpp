@@ -1,6 +1,6 @@
-#include "weapon/BetaCannon.hpp"
+#include "weapon/GammaCannon.hpp"
 
-BetaCannon::BetaCannon(float x, float y, CannonBall* cannonBallTemplate, float fireRate, bool isFaceToMouse) 
+GammaCannon::GammaCannon(float x, float y, CannonBall* cannonBallTemplate, float fireRate, bool isFaceToMouse) 
     : Cannon(x, y, cannonBallTemplate, fireRate, 4, 2, 1, isFaceToMouse) {
 
     // 設置中心點
@@ -10,8 +10,8 @@ BetaCannon::BetaCannon(float x, float y, CannonBall* cannonBallTemplate, float f
     for(int i = 0; i < 4; i++) {
         sf::Texture texture;
         sf::Texture fireTexture;
-        if(!texture.loadFromFile("data/image/Cannon3_color3/Cannon3_color3_" + std::to_string(i + 1) + ".png")) {
-            std::cout << "[錯誤] 讀取 " << "data/image/Cannon3_color3/Cannon3_color3_" << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
+        if(!texture.loadFromFile("data/image/Cannon4_color3/Cannon4_color3_" + std::to_string(i + 1) + ".png")) {
+            std::cout << "[錯誤] 讀取 " << "data/image/Cannon4_color3/Cannon4_color3_" << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
         } else {
             this->textures.push_back(texture);
         }
@@ -36,11 +36,11 @@ BetaCannon::BetaCannon(float x, float y, CannonBall* cannonBallTemplate, float f
     this->fireSprite.setTexture(this->fireTexture);
 }
 
-BetaCannon::~BetaCannon() {
+GammaCannon::~GammaCannon() {
 
 }
 
-void BetaCannon::fire(const sf::RenderWindow& window) {
+void GammaCannon::fire(const sf::RenderWindow& window) {
     CannonBall* cannonBall = new CannonBall(*cannonBallTemplate);
 
     sf::Vector2f cannonCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
