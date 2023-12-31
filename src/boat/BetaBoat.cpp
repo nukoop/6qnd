@@ -5,9 +5,9 @@ BetaBoat::BetaBoat(float x, float y, float movementSpeed, Cannon* cannon, Cannon
     
     // 設置大砲中心點
     if(const BetaCannon* betaCannonPtr = dynamic_cast<const BetaCannon*>(cannon)) {
-        cannon->setOrigin(64, 64);
+        cannon->setOrigin(33, 22);
     } else {
-        cannon->setOrigin(64, 64);
+        cannon->setOrigin(33, 22);
     }
 
     // 讀取所有圖片
