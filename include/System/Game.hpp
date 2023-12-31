@@ -6,7 +6,12 @@
 #include <string>
 
 #include "boat/AlphaBoat.hpp"
+#include "boat/BetaBoat.hpp"
+#include "boat/GammaBoat.hpp"
+#include "boat/DeltaBoat.hpp"
 #include "weapon/AlphaCannon.hpp"
+#include "weapon/BetaCannon.hpp"
+#include "weapon/DeltaCannon.hpp"
 #include "weapon/SimpleCannonBall.hpp"
 
 class Game {
@@ -16,8 +21,13 @@ private:
     sf::Event event;
 
     SimpleCannonBall simpleCannonBall;
-    AlphaCannon alphaCannon;
-    AlphaBoat player;
+    //DeltaCannon deltaCannon;
+    //DeltaBoat player;
+    
+    //AlphaCannon alphaCannon;
+    //AlphaBoat player;
+    BetaCannon betaCannon;
+    BetaBoat player;
 public:
     Game();
     virtual ~Game();

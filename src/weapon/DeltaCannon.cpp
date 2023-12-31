@@ -1,23 +1,23 @@
-#include "weapon/AlphaCannon.hpp"
+#include "weapon/DeltaCannon.hpp"
 
-AlphaCannon::AlphaCannon(float x, float y, CannonBall* cannonBallTemplate, float fireRate, bool isFaceToMouse) 
+DeltaCannon::DeltaCannon(float x, float y, CannonBall* cannonBallTemplate, float fireRate, bool isFaceToMouse) 
     : Cannon(x, y, cannonBallTemplate, fireRate, 4, 2, 1, isFaceToMouse) {
 
     // 設置中心點
-    this->fireSprite.setOrigin(34, -36);
+    this->fireSprite.setOrigin(60, -68);
     
     // 讀取所有圖片
     for(int i = 0; i < 4; i++) {
         sf::Texture texture;
         sf::Texture fireTexture;
-        if(!texture.loadFromFile("data/image/Cannon2_color3/Cannon2_color3_" + std::to_string(i + 1) + ".png")) {
-            std::cout << "[錯誤] 讀取 " << "data/image/Cannon2_color3/Cannon2_color3_" << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
+        if(!texture.loadFromFile("data/image/Cannon1_color3/Cannon1_color3_" + std::to_string(i + 1) + ".png")) {
+            std::cout << "[錯誤] 讀取 " << "data/image/Cannon1_color3/Cannon1_color3_" << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
         } else {
             this->textures.push_back(texture);
         }
 
-        if(!fireTexture.loadFromFile("data/image/Fire1/Fire1_" + std::to_string(i + 1) + ".png")) {
-            std::cout << "[錯誤] 讀取 " << "data/image/Fire1/Fire1_" << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
+        if(!fireTexture.loadFromFile("data/image/Fire4/Fire4_" + std::to_string(i + 1) + ".png")) {
+            std::cout << "[錯誤] 讀取 " << "data/image/Fire4/Fire4_" << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
         } else {
             this->fireTextures.push_back(fireTexture);
         }
@@ -25,7 +25,7 @@ AlphaCannon::AlphaCannon(float x, float y, CannonBall* cannonBallTemplate, float
 
     // 讀取大砲音效
     if(!this->fireSoundBuffer.loadFromFile("data/sound/cannon1.wav")) {
-        std::cout << "[錯誤] 讀取 data/sound/cannon1.wav 音訊時發生了錯誤" << std::endl;
+        std::cout << "[錯誤] 讀取 data/sound/cannon3.wav 音訊時發生了錯誤" << std::endl;
     }
     this->fireSound.setBuffer(this->fireSoundBuffer);
 
@@ -36,11 +36,11 @@ AlphaCannon::AlphaCannon(float x, float y, CannonBall* cannonBallTemplate, float
     this->fireSprite.setTexture(this->fireTexture);
 }
 
-AlphaCannon::~AlphaCannon() {
+DeltaCannon::~DeltaCannon() {
 
 }
 
-void AlphaCannon::fire(const sf::RenderWindow& window) {
+void DeltaCannon::fire(const sf::RenderWindow& window) {
     CannonBall* cannonBall = new CannonBall(*cannonBallTemplate);
 
     sf::Vector2f cannonCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
@@ -59,21 +59,11 @@ void AlphaCannon::fire(const sf::RenderWindow& window) {
         );
         cannonBall->setCurrentVelocity(aimDirNorm * cannonBall->getMaxSpeed());
 
-        // 第一顆子彈
         cannonBall->setOrigin(
-            200,
-            -1000
+            100,
+            -2300
         );
         this->cannonBalls.push_back(cannonBall);
-
-        CannonBall* cannonBall2 = new CannonBall(*cannonBall);
-        
-        // 第二顆子彈
-        cannonBall2->setOrigin(
-            50,
-            -1000
-        );
-        this->cannonBalls.push_back(cannonBall2);
         this->fireSound.play();
     }
 }
