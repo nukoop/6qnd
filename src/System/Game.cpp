@@ -1,8 +1,8 @@
 #include "system/Game.hpp"
 
 Game::Game()
-    : betaCannon(0, 0, &simpleCannonBall, 0.1f, true),
-      player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &betaCannon, &simpleCannonBall) {
+    : gammaCannon(0, 0, &simpleCannonBall, 0.1f, true),
+      player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &gammaCannon, &simpleCannonBall) {
     this->window = nullptr;
 
     this->videoMode = sf::VideoMode(std::stoi(getenv("WINDOW_WIDTH")), std::stoi(getenv("WINDOW_HEIGHT")));

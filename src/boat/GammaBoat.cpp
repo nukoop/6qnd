@@ -4,7 +4,7 @@ GammaBoat::GammaBoat(float x, float y, float movementSpeed, Cannon* cannon, Cann
     : Boat(x, y, movementSpeed, cannon, cannonBall, 0.2f, 4, 1, 1) {
     
     // 設置大砲中心點
-    if(const AlphaCannon* alphaCannonPtr = dynamic_cast<const AlphaCannon*>(cannon)) {
+    if(const GammaCannon* gammaCannonPtr = dynamic_cast<const GammaCannon*>(cannon)) {
         cannon->setOrigin(33, 22);
     } else {
         cannon->setOrigin(33, 22);
@@ -30,7 +30,7 @@ GammaBoat::~GammaBoat() {
 }
 
 void GammaBoat::updateRotation() {
-    if(const AlphaCannon* alphaCannonPtr = dynamic_cast<const AlphaCannon*>(cannon)) {
+    if(const GammaCannon* alphaCannonPtr = dynamic_cast<const GammaCannon*>(cannon)) {
         if(this->sprite.getRotation() == 0) {
             this->cannon->setPosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - (-20));
         } else if(this->sprite.getRotation() == 90) {

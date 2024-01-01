@@ -27,10 +27,10 @@ private:
     
     //AlphaCannon alphaCannon;
     //AlphaBoat player;
-    BetaCannon betaCannon;
-    BetaBoat player;
-    //GammaCannon gammaCannon;
-    ///GammaBoat player;
+    //BetaCannon betaCannon;
+    //BetaBoat player;
+    GammaCannon gammaCannon;
+    GammaBoat player;
     
 public:
     Game();

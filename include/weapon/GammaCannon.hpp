@@ -1,4 +1,4 @@
-#ifndef GAMMACANNON_HPP
+#ifndef GAMMA_CANNON_HPP
 #define GAMMA_CANNON_HPP
 
 #include "weapon/Cannon.hpp"

@@ -2,7 +2,7 @@
 #define GAMMA_BOAT_HPP
 
 #include "boat/Boat.hpp"
-#include "weapon/AlphaCannon.hpp"
+#include "weapon/GammaCannon.hpp"
 
 class GammaBoat : public Boat {
 public:
