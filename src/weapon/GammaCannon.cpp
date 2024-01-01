@@ -4,7 +4,7 @@ GammaCannon::GammaCannon(float x, float y, CannonBall* cannonBallTemplate, float
     : Cannon(x, y, cannonBallTemplate, fireRate, 4, 2, 1, isFaceToMouse) {
 
     // 設置中心點
-    this->fireSprite.setOrigin(20, -25);
+    this->fireSprite.setOrigin(35, -25);  //20.-25
     
     // 讀取所有圖片
     for(int i = 0; i < 4; i++) {
@@ -16,8 +16,8 @@ GammaCannon::GammaCannon(float x, float y, CannonBall* cannonBallTemplate, float
             this->textures.push_back(texture);
         }
 
-        if(!fireTexture.loadFromFile("data/image/Fire2/Fire2_" + std::to_string(i + 1) + ".png")) {
-            std::cout << "[錯誤] 讀取 " << "data/image/Fire2/Fire2_" << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
+        if(!fireTexture.loadFromFile("data/image/Fire1/Fire1_" + std::to_string(i + 1) + ".png")) {
+            std::cout << "[錯誤] 讀取 " << "data/image/Fire1/Fire1_" << std::to_string(i + 1) << ".png 圖片時發生了錯誤" << std::endl;
         } else {
             this->fireTextures.push_back(fireTexture);
         }
