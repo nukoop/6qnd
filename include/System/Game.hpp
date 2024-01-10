@@ -42,15 +42,12 @@ public:
     void updateInput();
     void update();
     void render();
-<<<<<<< HEAD
-    
-=======
+
 
     //GUI
     void quit();
     sf::RenderWindow* getWindow();
     void start();
->>>>>>> 59de58017d048b362a5c27605dd24921da2f1aeb
 };
 
 #endif
