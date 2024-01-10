@@ -3,7 +3,7 @@
 DeltaCannon::DeltaCannon(float x, float y, CannonBall* cannonBallTemplate, float fireRate, bool isFaceToMouse) 
     : Cannon(x, y, cannonBallTemplate, fireRate, 4, 2, 1, isFaceToMouse) {
 
-    // 設置中心點
+    // 設置開炮火光中心點
     this->fireSprite.setOrigin(60, -68);
     
     // 讀取所有圖片
@@ -59,7 +59,7 @@ void DeltaCannon::fire(const sf::RenderWindow& window) {
         );
         cannonBall->setCurrentVelocity(aimDirNorm * cannonBall->getMaxSpeed());
 
-        cannonBall->setOrigin(
+        cannonBall->setOrigin( //設置子彈出現點
             100,
             -2300
         );
