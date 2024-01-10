@@ -1,8 +1,8 @@
 #include "system/Game.hpp"
 
 Game::Game()
-    : deltaCannon(0, 0, &simpleCannonBall, 0.1f, true),
-      player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &deltaCannon, &simpleCannonBall) {
+    : alphaCannon(0, 0, &simpleCannonBall, 0.1f, true),
+      player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall) {
     this->window = nullptr;
 
     this->videoMode = sf::VideoMode(std::stoi(getenv("WINDOW_WIDTH")), std::stoi(getenv("WINDOW_HEIGHT")));
@@ -32,6 +32,9 @@ void Game::updateInput() {
     } else {
         this->player.setIsFire(false);
     }
+
+    //計算滑鼠角度
+    
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && this->player.getPosition().x > (0.f + std::max(this->player.getGlobalBounds().width, this->player.getGlobalBounds().height) / 2)) {
         this->player.forward();
@@ -69,4 +72,28 @@ void Game::render() {
     this->player.render(this->window);
 
     this->window->display();
+}
+
+//GUI test
+void Game::quit() {
+    // 做一些清理工作或其他必要的操作
+    window->close();
+}
+
+sf::RenderWindow* Game::getWindow() {
+    return window;
+}
+
+void Game::start() {
+    // 執行遊戲開始的相關邏輯
+    // 例如初始化遊戲狀態、載入資源等
+
+    // 開始遊戲的主迴圈
+    while (running()) {
+        // 更新遊戲邏輯
+        update();
+
+        // 渲染遊戲畫面
+        render();
+    }
 }
