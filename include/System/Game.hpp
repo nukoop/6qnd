@@ -32,6 +32,7 @@ public:
     void updateInput();
     void update();
     void render();
+    
 };
 
 #endif
