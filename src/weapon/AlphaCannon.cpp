@@ -63,9 +63,6 @@ void AlphaCannon::fire(const sf::RenderWindow& window) {
             this->sprite.getPosition().y
         );
 
-        // 計算滑鼠角度
-        float angle = std::atan2(localMousePosition.y, localMousePosition.x) * 180 / M_PI;
-
         // 計算向量的x和y分量
         float angleRad = angle * M_PI / 180;
         float velocityX = std::cos(angleRad) * cannonBall->getMaxSpeed();
