@@ -44,3 +44,8 @@ void AlphaBoat::updateRotation() {
 
     }
 }
+
+//算角度用
+sf::Sprite AlphaBoat::getSprite() const {
+    return this->sprite;
+}

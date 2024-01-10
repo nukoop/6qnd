@@ -9,6 +9,7 @@
 #include "boat/BetaBoat.hpp"
 #include "boat/GammaBoat.hpp"
 #include "boat/DeltaBoat.hpp"
+#include "boat/OriginalEnemyBoat.hpp"
 #include "weapon/AlphaCannon.hpp"
 #include "weapon/BetaCannon.hpp"
 #include "weapon/DeltaCannon.hpp"
@@ -31,6 +32,7 @@ private:
     //BetaBoat player;
     //GammaCannon gammaCannon;
     //GammaBoat player;
+    OriginalEnemyBoat enemy;
     
 public:
     Game();

@@ -43,24 +43,20 @@ AlphaCannon::~AlphaCannon() {
 void AlphaCannon::fire(const sf::RenderWindow& window) {
     CannonBall* cannonBall = new CannonBall(*cannonBallTemplate);
 
-    sf::Vector2f cannonCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
-    sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
+    //sf::Vector2f cannonCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
+    //sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
     //sf::Vector2f aimDirection = mousePosition - cannonCenter;//原本的fire方式
     //sf::Vector2f aimDirNorm = aimDirection / std::sqrt(aimDirection.x * aimDirection.x + aimDirection.y * aimDirection.y);//原本的fire方式
-    // 轉換滑鼠座標到局部座標系
-    sf::Vector2f localMousePosition = mousePosition - cannonCenter;
     
-    // 計算滑鼠角度
-    //float angle = std::atan2(localMousePosition.y, localMousePosition.x) * 180 / M_PI;
-
-    // 設置大砲旋轉角度
-    //this->sprite.setRotation(angle);
+    // 轉換滑鼠座標到局部座標系
+    //sf::Vector2f localMousePosition = mousePosition - cannonCenter;
 
 
     this->texture = this->textures[this->animation.current - 1];
     this->fireTexture = this->fireTextures[this->animation.current - 1];
 
     if(this->cannonBallClock.getElapsedTime().asSeconds() > this->fireRate) {
+        float angle = this->firingAngle;//++
         this->cannonBallClock.restart();
         cannonBall->setPosition(
             this->sprite.getPosition().x,
@@ -97,4 +93,8 @@ void AlphaCannon::fire(const sf::RenderWindow& window) {
         this->cannonBalls.push_back(cannonBall2);
         this->fireSound.play();
     }
+}
+
+void AlphaCannon::setFiringAngle(float angle) {
+    this->firingAngle = angle;
 }

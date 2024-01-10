@@ -2,7 +2,8 @@
 
 Game::Game()
     : alphaCannon(0, 0, &simpleCannonBall, 0.1f, true),
-      player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall) {
+      player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall),
+      enemy(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall) {  //test
     this->window = nullptr;
 
     this->videoMode = sf::VideoMode(std::stoi(getenv("WINDOW_WIDTH")), std::stoi(getenv("WINDOW_HEIGHT")));
@@ -29,11 +30,18 @@ void Game::pollEvent() {
 void Game::updateInput() {
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         this->player.setIsFire(true);
+        // 計算發射角度
+        sf::Vector2f cannonCenter = sf::Vector2f(this->alphaCannon.getPosition().x, this->alphaCannon.getPosition().y);
+        sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(*this->window));
+        sf::Vector2f localMousePosition = mousePosition - cannonCenter;
+
+        float angle = std::atan2(localMousePosition.y, localMousePosition.x) * 180 / M_PI;
+
+        // 在 AlphaCannon 中設置發射角度
+        this->alphaCannon.setFiringAngle(angle);
     } else {
         this->player.setIsFire(false);
     }
-
-    //計算滑鼠角度
     
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && this->player.getPosition().x > (0.f + std::max(this->player.getGlobalBounds().width, this->player.getGlobalBounds().height) / 2)) {
@@ -54,6 +62,7 @@ void Game::update() {
     this->pollEvent();
     this->updateInput();
     this->player.update(*(this->window));
+    //this->enemy.update(*(this->window));
 }
 
 void Game::render() {
@@ -70,6 +79,7 @@ void Game::render() {
     this->window->draw(background);
 
     this->player.render(this->window);
+    this->enemy.render(this->window);  //test
 
     this->window->display();
 }
