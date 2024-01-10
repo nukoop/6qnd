@@ -26,9 +26,9 @@ private:
     //DeltaBoat player;
     
     AlphaCannon alphaCannon;
-    //AlphaBoat player;
+    AlphaBoat player;
     //BetaCannon betaCannon;
-    BetaBoat player;
+    //BetaBoat player;
     //GammaCannon gammaCannon;
     //GammaBoat player;
     

@@ -28,7 +28,7 @@ AlphaCannon::AlphaCannon(float x, float y, CannonBall* cannonBallTemplate, float
         std::cout << "[錯誤] 讀取 data/sound/cannon1.wav 音訊時發生了錯誤" << std::endl;
     }
     this->fireSound.setBuffer(this->fireSoundBuffer);
-
+    
     // 把大砲和砲火的圖片設置為預設圖片
     this->texture = this->textures[frameDefault - 1];
     this->sprite.setTexture(this->texture);
@@ -45,8 +45,17 @@ void AlphaCannon::fire(const sf::RenderWindow& window) {
 
     sf::Vector2f cannonCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
     sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
-    sf::Vector2f aimDirection = mousePosition - cannonCenter;
-    sf::Vector2f aimDirNorm = aimDirection / std::sqrt(aimDirection.x * aimDirection.x + aimDirection.y * aimDirection.y);
+    //sf::Vector2f aimDirection = mousePosition - cannonCenter;//原本的fire方式
+    //sf::Vector2f aimDirNorm = aimDirection / std::sqrt(aimDirection.x * aimDirection.x + aimDirection.y * aimDirection.y);//原本的fire方式
+    // 轉換滑鼠座標到局部座標系
+    sf::Vector2f localMousePosition = mousePosition - cannonCenter;
+    
+    // 計算滑鼠角度
+    //float angle = std::atan2(localMousePosition.y, localMousePosition.x) * 180 / M_PI;
+
+    // 設置大砲旋轉角度
+    //this->sprite.setRotation(angle);
+
 
     this->texture = this->textures[this->animation.current - 1];
     this->fireTexture = this->fireTextures[this->animation.current - 1];
@@ -57,7 +66,19 @@ void AlphaCannon::fire(const sf::RenderWindow& window) {
             this->sprite.getPosition().x,
             this->sprite.getPosition().y
         );
-        cannonBall->setCurrentVelocity(aimDirNorm * cannonBall->getMaxSpeed());
+
+        // 計算滑鼠角度
+        float angle = std::atan2(localMousePosition.y, localMousePosition.x) * 180 / M_PI;
+
+        // 計算向量的x和y分量
+        float angleRad = angle * M_PI / 180;
+        float velocityX = std::cos(angleRad) * cannonBall->getMaxSpeed();
+        float velocityY = std::sin(angleRad) * cannonBall->getMaxSpeed();
+
+        // 設定cannonBall的當前速度
+        cannonBall->setCurrentVelocity(sf::Vector2f(velocityX, velocityY));
+
+        //cannonBall->setCurrentVelocity(aimDirNorm * cannonBall->getMaxSpeed());  //原本的fire方式
 
         // 第一顆子彈
         cannonBall->setOrigin(

@@ -33,6 +33,9 @@ void Game::updateInput() {
         this->player.setIsFire(false);
     }
 
+    //計算滑鼠角度
+    
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && this->player.getPosition().x > (0.f + std::max(this->player.getGlobalBounds().width, this->player.getGlobalBounds().height) / 2)) {
         this->player.forward();
     }
