@@ -1,5 +1,5 @@
 #include <iostream>
-#include "GUI/main_menu.hpp"
+#include "GUI/MainMenu.hpp"
 
 MainMenu::MainMenu(float width, float height){
     if(!font.loadFromFile("data/font/Cubic_11_1.100_R.ttf")){
@@ -53,21 +53,23 @@ void MainMenu::MoveUp(){
 
         MainMenuSelected--;
         if(MainMenuSelected == -1){
-            MainMenuSelected = Max_main_menu - 1;
+            //MainMenuSelected = Max_main_menu - 1;
+            MainMenuSelected = 2;
         }
-        mainMenu[MainMenuSelected].setFillColor(sf::Color::Blue);
+
+        mainMenu[MainMenuSelected].setFillColor(sf::Color(120, 178, 217));
     }
 }
 
 void MainMenu::MoveDown(){
-    if(MainMenuSelected + 1 < Max_main_menu){
+    if(MainMenuSelected + 1 <= Max_main_menu){
         mainMenu[MainMenuSelected].setFillColor(sf::Color::White);
 
         MainMenuSelected++;
-        if(MainMenuSelected == Max_main_menu){
+        if(MainMenuSelected == 4){
             MainMenuSelected = 0;
         }
-        mainMenu[MainMenuSelected].setFillColor(sf::Color::Blue);
+        mainMenu[MainMenuSelected].setFillColor(sf::Color(120, 178, 217));
     }
 }
 
