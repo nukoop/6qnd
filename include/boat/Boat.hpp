@@ -18,6 +18,9 @@
 
 class Boat {
 protected:
+    sf::RectangleShape healthBarOutline;//血條方塊外框
+    sf::RectangleShape healthBar;//血條方塊
+
     sf::Texture texture;
     std::vector<sf::Texture> textures;
     sf::Sprite sprite;

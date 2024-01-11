@@ -8,6 +8,13 @@ Boat::Boat(float x, float y, float movementSpeed, Cannon* cannon, CannonBall* ca
     this->cannon = cannon;
     this->cannonBall = cannonBall;
     this->sprite.setOrigin(64, 64);
+
+    this->healthBar.setSize(sf::Vector2f(100, 10));
+    this->healthBar.setFillColor(sf::Color::Red);
+    this->healthBarOutline.setSize(sf::Vector2f(100, 10));
+    this->healthBarOutline.setFillColor(sf::Color::Transparent);
+    this->healthBarOutline.setOutlineColor(sf::Color::White);
+    this->healthBarOutline.setOutlineThickness(1);
 }
 
 void Boat::upward() {
@@ -56,9 +63,14 @@ void Boat::update(const sf::RenderWindow &window) {
     this->animation.update(this->clock.restart().asSeconds());
     this->texture = this->textures[this->animation.current - 1];
     this->cannon->update(window);
+
+    this->healthBarOutline.setPosition(this->sprite.getPosition().x -50, this->sprite.getPosition().y - 80);//更新血條外框位置
+    this->healthBar.setPosition(this->sprite.getPosition().x -50, this->sprite.getPosition().y - 80);//更新血條位置
 }
 
 void Boat::render(sf::RenderTarget* target) {
+    target->draw(this->healthBarOutline);
+    target->draw(this->healthBar);//渲染血條
     target->draw(this->sprite);
     this->cannon->render(target);
 }
