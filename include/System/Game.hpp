@@ -11,7 +11,6 @@
 #include "boat/BetaBoat.hpp"
 #include "boat/GammaBoat.hpp"
 #include "boat/DeltaBoat.hpp"
-#include "boat/OriginalEnemyBoat.hpp"
 #include "weapon/AlphaCannon.hpp"
 #include "weapon/BetaCannon.hpp"
 #include "weapon/DeltaCannon.hpp"
@@ -30,7 +29,6 @@ private:
 
     std::vector<Boat*> enemyBoats;
     sf::Clock enemySpawnClock;
-    OriginalEnemyBoat enemy;
 public:
     Game();
     virtual ~Game();

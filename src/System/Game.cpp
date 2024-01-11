@@ -4,8 +4,7 @@
 
 Game::Game()
     : alphaCannon(0, 0, &simpleCannonBall, 0.1f, true),
-      player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall),
-      enemy(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall) {  //test
+      player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall) { 
     this->window = nullptr;
 
     this->videoMode = sf::VideoMode(std::stoi(getenv("WINDOW_WIDTH")), std::stoi(getenv("WINDOW_HEIGHT")));
@@ -83,7 +82,6 @@ void Game::render() {
     this->window->draw(background);
 
     this->player.render(this->window);
-    this->enemy.render(this->window);  //test
 
     for (auto& enemyBoat : this->enemyBoats) {
         enemyBoat->render(this->window);
