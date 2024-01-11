@@ -25,7 +25,7 @@ private:
     //DeltaCannon deltaCannon;
     //DeltaBoat player;
     
-    AlphaCannon alphaCannon;
+    BetaCannon alphaCannon;
     AlphaBoat player;
     //BetaCannon betaCannon;
     //BetaBoat player;
@@ -43,7 +43,7 @@ public:
     void update();
     void render();
 
-
+    
     //GUI
     void quit();
     sf::RenderWindow* getWindow();
