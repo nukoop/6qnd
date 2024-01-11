@@ -26,9 +26,6 @@ private:
     SimpleCannonBall simpleCannonBall;
     AlphaCannon alphaCannon;
     AlphaBoat player;
-
-    std::vector<Boat*> enemyBoats;
-    sf::Clock enemySpawnClock;
 public:
     Game();
     virtual ~Game();
@@ -41,7 +38,6 @@ public:
     void render();
 
     sf::Vector2f generateRandomPoints(int dis);
-    void updateEnemyBoats();
     //GUI
     void quit();
     sf::RenderWindow* getWindow();

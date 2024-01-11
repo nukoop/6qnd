@@ -64,7 +64,6 @@ void Game::update() {
     this->pollEvent();
     this->updateInput();
     this->player.update(*(this->window));
-    updateEnemyBoats();
     //this->enemy.update(*(this->window));
 }
 
@@ -83,9 +82,6 @@ void Game::render() {
 
     this->player.render(this->window);
 
-    for (auto& enemyBoat : this->enemyBoats) {
-        enemyBoat->render(this->window);
-    }
 
     this->window->display();
 }
@@ -122,24 +118,6 @@ sf::Vector2f Game::generateRandomPoints(int dis) {
     }
 
     return sf::Vector2f(x, y);
-}
-
-
-void Game::updateEnemyBoats(){
-    static sf::Clock enemySpawnClock;
-
-    if (enemySpawnClock.getElapsedTime().asSeconds() >= 5.0) {
-        sf::Vector2f enemyBoatPosition = generateRandomPoints(10);
-
-        Boat* newEnemyBoat = new DeltaBoat(enemyBoatPosition.x, enemyBoatPosition.y,2.f,&alphaCannon, &simpleCannonBall);
-        enemyBoats.push_back(newEnemyBoat);
-
-        enemySpawnClock.restart();
-    }
-    for (auto& enemyBoat : enemyBoats) {
-        sf::Vector2f playerPosition = player.getPosition();
-        enemyBoat->moveTowardsPlayer(playerPosition);
-    }
 }
 
 //GUI test
