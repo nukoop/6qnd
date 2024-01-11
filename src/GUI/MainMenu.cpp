@@ -1,10 +1,14 @@
 #include <iostream>
+#include <SFML/System/Clock.hpp>
 #include "GUI/MainMenu.hpp"
 
 MainMenu::MainMenu(float width, float height){
     if(!font.loadFromFile("data/font/Cubic_11_1.100_R.ttf")){
         std::cout << "無法載入字型檔案" << std::endl;
     }
+
+    delay = sf::seconds(0.2f); // 設置延遲時間為0.2秒
+    clock.restart(); // 重置計時器
 
     //Play
     mainMenu[0].setFont(font);
@@ -48,9 +52,12 @@ void MainMenu::render(sf::RenderWindow& window){
 }
 
 void MainMenu::MoveUp(){
+    if(clock.getElapsedTime() < delay) {
+        return; // 如果計時器未超過延遲時間，直接返回
+    }
     if(MainMenuSelected - 1 >= 0){
         mainMenu[MainMenuSelected].setFillColor(sf::Color::White);
-
+        clock.restart(); // 重置計時器
         MainMenuSelected--;
         if(MainMenuSelected == -1){
             MainMenuSelected = Max_main_menu - 1;
@@ -62,9 +69,12 @@ void MainMenu::MoveUp(){
 }
 
 void MainMenu::MoveDown(){
+    if(clock.getElapsedTime() < delay) {
+        return; // 如果計時器未超過延遲時間，直接返回
+    }
     if(MainMenuSelected + 1 <= Max_main_menu - 1){
         mainMenu[MainMenuSelected].setFillColor(sf::Color::White);
-
+        clock.restart(); // 重置計時器
         MainMenuSelected++;
         if(MainMenuSelected == Max_main_menu){
             MainMenuSelected = 0;

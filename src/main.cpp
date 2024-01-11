@@ -20,7 +20,7 @@ int main()
     MainMenu mainMenu(WINDOW_WIDTH, WINDOW_HEIGHT);
     // 只要視窗還沒關閉就一直執行
     while (game.running()) {
-
+        
         if (inMainMenu) {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
                 mainMenu.MoveUp();
