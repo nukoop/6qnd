@@ -44,6 +44,10 @@ public:
     virtual void updateRotation() = 0;
     void update(const sf::RenderWindow &window);
     void render(sf::RenderTarget* target);
+
+
+    virtual float getMovementSpeed() const;
+    virtual void moveTowardsPlayer(const sf::Vector2f& playerPosition);
 };
 
 #endif
