@@ -15,10 +15,10 @@
 #include "weapon/Cannon.hpp"
 #include "weapon/CannonBall.hpp"
 #include "system/Animation.hpp"
+//#include "boat/HealthBar.hpp" //血條
 
 class Boat {
 protected:
-    sf::RectangleShape healthBarOutline;//血條方塊外框
     sf::RectangleShape healthBar;//血條方塊
 
     sf::Texture texture;
