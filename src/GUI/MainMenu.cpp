@@ -53,8 +53,8 @@ void MainMenu::MoveUp(){
 
         MainMenuSelected--;
         if(MainMenuSelected == -1){
-            //MainMenuSelected = Max_main_menu - 1;
-            MainMenuSelected = 2;
+            MainMenuSelected = Max_main_menu - 1;
+            //MainMenuSelected = 2;
         }
 
         mainMenu[MainMenuSelected].setFillColor(sf::Color(120, 178, 217));
@@ -62,11 +62,11 @@ void MainMenu::MoveUp(){
 }
 
 void MainMenu::MoveDown(){
-    if(MainMenuSelected + 1 <= Max_main_menu){
+    if(MainMenuSelected + 1 <= Max_main_menu - 1){
         mainMenu[MainMenuSelected].setFillColor(sf::Color::White);
 
         MainMenuSelected++;
-        if(MainMenuSelected == 4){
+        if(MainMenuSelected == Max_main_menu){
             MainMenuSelected = 0;
         }
         mainMenu[MainMenuSelected].setFillColor(sf::Color(120, 178, 217));

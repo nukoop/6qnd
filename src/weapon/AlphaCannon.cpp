@@ -43,6 +43,7 @@ AlphaCannon::~AlphaCannon() {
 void AlphaCannon::fire(const sf::RenderWindow& window) {
     CannonBall* cannonBall = new CannonBall(*cannonBallTemplate);
 
+    //這裡都移到game去計算了
     //sf::Vector2f cannonCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
     //sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
     //sf::Vector2f aimDirection = mousePosition - cannonCenter;//原本的fire方式
@@ -56,7 +57,7 @@ void AlphaCannon::fire(const sf::RenderWindow& window) {
     this->fireTexture = this->fireTextures[this->animation.current - 1];
 
     if(this->cannonBallClock.getElapsedTime().asSeconds() > this->fireRate) {
-        float angle = this->firingAngle;//++
+        float angle = this->firingAngle;
         this->cannonBallClock.restart();
         cannonBall->setPosition(
             this->sprite.getPosition().x,
@@ -70,8 +71,6 @@ void AlphaCannon::fire(const sf::RenderWindow& window) {
 
         // 設定cannonBall的當前速度
         cannonBall->setCurrentVelocity(sf::Vector2f(velocityX, velocityY));
-
-        //cannonBall->setCurrentVelocity(aimDirNorm * cannonBall->getMaxSpeed());  //原本的fire方式
 
         // 第一顆子彈
         cannonBall->setOrigin(
