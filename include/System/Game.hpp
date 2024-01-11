@@ -4,12 +4,13 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <vector>
 
+#include "boat/Boat.hpp"
 #include "boat/AlphaBoat.hpp"
 #include "boat/BetaBoat.hpp"
 #include "boat/GammaBoat.hpp"
 #include "boat/DeltaBoat.hpp"
-#include "boat/OriginalEnemyBoat.hpp"
 #include "weapon/AlphaCannon.hpp"
 #include "weapon/BetaCannon.hpp"
 #include "weapon/DeltaCannon.hpp"
@@ -23,17 +24,8 @@ private:
     sf::Event event;
 
     SimpleCannonBall simpleCannonBall;
-    //DeltaCannon deltaCannon;
-    //DeltaBoat player;
-    
     AlphaCannon alphaCannon;
     AlphaBoat player;
-    //BetaCannon betaCannon;
-    //BetaBoat player;
-    //GammaCannon gammaCannon;
-    //GammaBoat player;
-    OriginalEnemyBoat enemy;
-    bool renderEnemy=true;
 public:
     Game();
     virtual ~Game();
@@ -45,7 +37,9 @@ public:
     void update();
     void render();
 
-    void SetrenderEnemy();
+
+    sf::Vector2f generateRandomPoints(int dis);
+
     //GUI
     void quit();
     sf::RenderWindow* getWindow();
