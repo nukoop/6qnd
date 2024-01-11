@@ -3,8 +3,9 @@
 #include <ctime>
 
 Game::Game()
-    : deltaCannon(0, 0, &simpleCannonBall, 0.1f, true),
-    player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &deltaCannon, &simpleCannonBall) {
+    : alphaCannon(0, 0, &simpleCannonBall, 0.1f, true),
+      player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall),
+      enemy(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall) {  //test
     this->window = nullptr;
 
     this->videoMode = sf::VideoMode(std::stoi(getenv("WINDOW_WIDTH")), std::stoi(getenv("WINDOW_HEIGHT")));
@@ -32,9 +33,19 @@ void Game::pollEvent() {
 void Game::updateInput() {
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         this->player.setIsFire(true);
+        // 計算發射角度
+        sf::Vector2f cannonCenter = sf::Vector2f(this->alphaCannon.getPosition().x, this->alphaCannon.getPosition().y);
+        sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(*this->window));
+        sf::Vector2f localMousePosition = mousePosition - cannonCenter;
+
+        float angle = std::atan2(localMousePosition.y, localMousePosition.x) * 180 / M_PI;
+
+        // 在 AlphaCannon 中設置發射角度
+        this->alphaCannon.setFiringAngle(angle);
     } else {
         this->player.setIsFire(false);
     }
+    
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && this->player.getPosition().x > (0.f + std::max(this->player.getGlobalBounds().width, this->player.getGlobalBounds().height) / 2)) {
         this->player.forward();
@@ -55,7 +66,7 @@ void Game::update() {
     this->updateInput();
     this->player.update(*(this->window));
     updateEnemyBoats();
-
+    //this->enemy.update(*(this->window));
 }
 
 void Game::render() {
@@ -72,6 +83,7 @@ void Game::render() {
     this->window->draw(background);
 
     this->player.render(this->window);
+    this->enemy.render(this->window);  //test
 
     for (auto& enemyBoat : this->enemyBoats) {
         enemyBoat->render(this->window);
@@ -79,6 +91,7 @@ void Game::render() {
 
     this->window->display();
 }
+
 
 sf::Vector2f Game::generateRandomPoints(int dis) {
     
@@ -131,7 +144,26 @@ void Game::updateEnemyBoats(){
     }
 }
 
+//GUI test
+void Game::quit() {
+    // 做一些清理工作或其他必要的操作
+    window->close();
+}
 
+sf::RenderWindow* Game::getWindow() {
+    return window;
+}
 
+void Game::start() {
+    // 執行遊戲開始的相關邏輯
+    // 例如初始化遊戲狀態、載入資源等
 
+    // 開始遊戲的主迴圈
+    while (running()) {
+        // 更新遊戲邏輯
+        update();
 
+        // 渲染遊戲畫面
+        render();
+    }
+}

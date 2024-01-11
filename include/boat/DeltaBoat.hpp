@@ -4,6 +4,7 @@
 #include "boat/Boat.hpp"
 #include "weapon/AlphaCannon.hpp"
 #include "weapon/DeltaCannon.hpp"
+#include "weapon/BetaCannon.hpp"
 
 class DeltaBoat : public Boat {
 public:

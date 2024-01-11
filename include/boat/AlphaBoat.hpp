@@ -9,6 +9,7 @@ public:
     AlphaBoat(float x, float y, float movementSpeed, Cannon* cannon, CannonBall* cannonBall);
     virtual ~AlphaBoat() override;
     virtual void updateRotation() override;
+    sf::Sprite getSprite() const;  //算角度用
 };
 
 #endif

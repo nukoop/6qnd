@@ -2,6 +2,7 @@
 #define BETA_BOAT_HPP
 
 #include "boat/Boat.hpp"
+#include "weapon/BetaCannon.hpp"
 #include "weapon/AlphaCannon.hpp"
 
 class BetaBoat : public Boat {

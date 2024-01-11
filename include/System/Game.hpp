@@ -11,8 +11,11 @@
 #include "boat/BetaBoat.hpp"
 #include "boat/GammaBoat.hpp"
 #include "boat/DeltaBoat.hpp"
+#include "boat/OriginalEnemyBoat.hpp"
 #include "weapon/AlphaCannon.hpp"
+#include "weapon/BetaCannon.hpp"
 #include "weapon/DeltaCannon.hpp"
+#include "weapon/GammaCannon.hpp"
 #include "weapon/SimpleCannonBall.hpp"
 
 class Game {
@@ -27,7 +30,7 @@ private:
 
     std::vector<Boat*> enemyBoats;
     sf::Clock enemySpawnClock;
-
+    OriginalEnemyBoat enemy;
 public:
     Game();
     virtual ~Game();
@@ -41,8 +44,10 @@ public:
 
     sf::Vector2f generateRandomPoints(int dis);
     void updateEnemyBoats();
-    
-
+    //GUI
+    void quit();
+    sf::RenderWindow* getWindow();
+    void start();
 };
 
 #endif
