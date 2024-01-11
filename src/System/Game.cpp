@@ -3,7 +3,8 @@
 Game::Game()
     : alphaCannon(0, 0, &simpleCannonBall, 0.1f, true),
       player(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall),
-      enemy(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall) {  //test
+      enemy(std::stoi(getenv("WINDOW_WIDTH")) / 2, std::stoi(getenv("WINDOW_HEIGHT")) / 2, 2.f, &alphaCannon, &simpleCannonBall) 
+{  //test
     this->window = nullptr;
 
     this->videoMode = sf::VideoMode(std::stoi(getenv("WINDOW_WIDTH")), std::stoi(getenv("WINDOW_HEIGHT")));
@@ -28,6 +29,7 @@ void Game::pollEvent() {
 }
 
 void Game::updateInput() {
+
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         this->player.setIsFire(true);
         // 計算發射角度
@@ -62,7 +64,7 @@ void Game::update() {
     this->pollEvent();
     this->updateInput();
     this->player.update(*(this->window));
-    //this->enemy.update(*(this->window));
+    this->enemy.update(*(this->window));
 }
 
 void Game::render() {
@@ -79,10 +81,18 @@ void Game::render() {
     this->window->draw(background);
 
     this->player.render(this->window);
-    this->enemy.render(this->window);  //test
+    
+   
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Backspace)) {
+        this->renderEnemy = false;
+    }
+    if(this->renderEnemy==true){
+        this->enemy.render(this->window);
+    }
 
     this->window->display();
 }
+
 
 //GUI test
 void Game::quit() {

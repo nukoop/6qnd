@@ -33,7 +33,7 @@ private:
     //GammaCannon gammaCannon;
     //GammaBoat player;
     OriginalEnemyBoat enemy;
-    
+    bool renderEnemy=true;
 public:
     Game();
     virtual ~Game();
@@ -45,7 +45,7 @@ public:
     void update();
     void render();
 
-    
+    void SetrenderEnemy();
     //GUI
     void quit();
     sf::RenderWindow* getWindow();
