@@ -133,7 +133,7 @@ void Game::updateEnemyBoats(){
     if (enemySpawnClock.getElapsedTime().asSeconds() >= 5.0) {
         sf::Vector2f enemyBoatPosition = generateRandomPoints(10);
 
-        Boat* newEnemyBoat = new DeltaBoat(enemyBoatPosition.x, enemyBoatPosition.y,2.f,&deltaCannon, &simpleCannonBall);
+        Boat* newEnemyBoat = new DeltaBoat(enemyBoatPosition.x, enemyBoatPosition.y,2.f,&alphaCannon, &simpleCannonBall);
         enemyBoats.push_back(newEnemyBoat);
 
         enemySpawnClock.restart();
