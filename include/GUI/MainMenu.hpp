@@ -21,6 +21,8 @@ private:
     int MainMenuSelected;
     Font font;
     Text mainMenu[Max_main_menu];
+    sf::Clock clock; // 計時器
+    sf::Time delay; // 延遲時間
 };
 
 #endif

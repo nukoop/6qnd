@@ -4,7 +4,7 @@ BetaCannon::BetaCannon(float x, float y, CannonBall* cannonBallTemplate, float f
     : Cannon(x, y, cannonBallTemplate, fireRate, 4, 2, 1, isFaceToMouse) {
 
     // 設置中心點
-    this->fireSprite.setOrigin(37, -25);  //20.-25
+    this->fireSprite.setOrigin(37, -25);  //37.-25
     
     // 讀取所有圖片
     for(int i = 0; i < 4; i++) {
@@ -43,21 +43,28 @@ BetaCannon::~BetaCannon() {
 void BetaCannon::fire(const sf::RenderWindow& window) {
     CannonBall* cannonBall = new CannonBall(*cannonBallTemplate);
 
-    sf::Vector2f cannonCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
-    sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
-    sf::Vector2f aimDirection = mousePosition - cannonCenter;
-    sf::Vector2f aimDirNorm = aimDirection / std::sqrt(aimDirection.x * aimDirection.x + aimDirection.y * aimDirection.y);
+    //sf::Vector2f cannonCenter = sf::Vector2f(this->sprite.getPosition().x, this->sprite.getPosition().y);
+    //sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
+    //sf::Vector2f aimDirection = mousePosition - cannonCenter;
+    //sf::Vector2f aimDirNorm = aimDirection / std::sqrt(aimDirection.x * aimDirection.x + aimDirection.y * aimDirection.y);
 
     this->texture = this->textures[this->animation.current - 1];
     this->fireTexture = this->fireTextures[this->animation.current - 1];
 
     if(this->cannonBallClock.getElapsedTime().asSeconds() > this->fireRate) {
+        float angle = this->firingAngle;
         this->cannonBallClock.restart();
         cannonBall->setPosition(
             this->sprite.getPosition().x,
             this->sprite.getPosition().y
         );
-        cannonBall->setCurrentVelocity(aimDirNorm * cannonBall->getMaxSpeed());
+        // 計算向量的x和y分量
+        float angleRad = angle * M_PI / 180;
+        float velocityX = std::cos(angleRad) * cannonBall->getMaxSpeed();
+        float velocityY = std::sin(angleRad) * cannonBall->getMaxSpeed();
+
+        // 設定cannonBall的當前速度
+        cannonBall->setCurrentVelocity(sf::Vector2f(velocityX, velocityY));
 
         // 第一顆子彈
         cannonBall->setOrigin(
@@ -67,4 +74,8 @@ void BetaCannon::fire(const sf::RenderWindow& window) {
         this->cannonBalls.push_back(cannonBall);
         this->fireSound.play();
     }
+}
+
+void BetaCannon::setFiringAngle(float angle) {
+    this->firingAngle = angle;
 }
