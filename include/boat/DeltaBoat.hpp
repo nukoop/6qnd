@@ -10,6 +10,7 @@ public:
     DeltaBoat(float x, float y, float movementSpeed, Cannon* cannon, CannonBall* cannonBall);
     virtual ~DeltaBoat() override;
     virtual void updateRotation() override;
+    virtual void moveTowardsPlayer(const sf::Vector2f &playerPosition) override;
 };
 
 #endif

@@ -4,7 +4,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include <vector>
 
+#include "boat/Boat.hpp"
 #include "boat/AlphaBoat.hpp"
 #include "boat/BetaBoat.hpp"
 #include "boat/GammaBoat.hpp"
@@ -22,6 +24,10 @@ private:
     SimpleCannonBall simpleCannonBall;
     DeltaCannon deltaCannon;
     DeltaBoat player;
+
+    std::vector<Boat*> enemyBoats;
+    sf::Clock enemySpawnClock;
+
 public:
     Game();
     virtual ~Game();
@@ -32,6 +38,11 @@ public:
     void updateInput();
     void update();
     void render();
+
+    sf::Vector2f generateRandomPoints(int dis);
+    void updateEnemyBoats();
+    
+
 };
 
 #endif

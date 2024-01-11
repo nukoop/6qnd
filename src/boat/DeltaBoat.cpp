@@ -56,3 +56,8 @@ void DeltaBoat::updateRotation() {
 
     }
 }
+
+
+void DeltaBoat::moveTowardsPlayer(const sf::Vector2f& playerPosition) {
+    Boat::moveTowardsPlayer(playerPosition);
+}

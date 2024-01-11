@@ -62,3 +62,23 @@ void Boat::render(sf::RenderTarget* target) {
     target->draw(this->sprite);
     this->cannon->render(target);
 }
+
+
+float Boat::getMovementSpeed() const {
+    return movementSpeed;
+}
+
+void Boat::moveTowardsPlayer(const sf::Vector2f& playerPosition) {
+    sf::Vector2f direction = playerPosition - getPosition();
+    float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+    // 正規化方向向量
+    if (length != 0) {
+        direction /= length;
+    }
+
+    float speed = getMovementSpeed();
+    this->sprite.move(direction.x * speed, direction.y * speed);
+    float angle = std::atan2(direction.y, direction.x) * (180.0 / M_PI);
+    this->sprite.setRotation(angle - 90);
+}
