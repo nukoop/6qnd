@@ -25,8 +25,8 @@ private:
     sf::Event event;
 
     SimpleCannonBall simpleCannonBall;
-    AlphaCannon alphaCannon;
-    AlphaBoat player;
+    DeltaCannon deltaCannon;
+    DeltaBoat player;
 
     std::vector<Boat*> enemyBoats;
     sf::Clock enemySpawnClock;
