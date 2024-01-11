@@ -4,10 +4,12 @@ BetaBoat::BetaBoat(float x, float y, float movementSpeed, Cannon* cannon, Cannon
     : Boat(x, y, movementSpeed, cannon, cannonBall, 0.2f, 4, 1, 1) {
     
     // 設置大砲中心點
-    if(const AlphaCannon* alphaCannonPtr = dynamic_cast<const AlphaCannon*>(cannon)) {
+    if(const BetaCannon* betaCannonPtr = dynamic_cast<const BetaCannon*>(cannon)) {
+        cannon->setOrigin(33, 22);
+    } else if(const AlphaCannon* AlphaCannonPtr = dynamic_cast<const AlphaCannon*>(cannon)) {
         cannon->setOrigin(66, 44);
     } else {
-        cannon->setOrigin(64, 64);
+        cannon->setOrigin(33, 22);
     }
 
     // 讀取所有圖片
@@ -30,7 +32,7 @@ BetaBoat::~BetaBoat() {
 }
 
 void BetaBoat::updateRotation() {
-    if(const AlphaCannon* alphaCannonPtr = dynamic_cast<const AlphaCannon*>(cannon)) {
+    if(const BetaCannon* betaCannonPtr = dynamic_cast<const BetaCannon*>(cannon)) {
         if(this->sprite.getRotation() == 0) {
             this->cannon->setPosition(this->sprite.getPosition().x + 2, this->sprite.getPosition().y - (-25));
         } else if(this->sprite.getRotation() == 90) {
@@ -41,6 +43,6 @@ void BetaBoat::updateRotation() {
             this->cannon->setPosition(this->sprite.getPosition().x - (-25), this->sprite.getPosition().y - 2);
         }
     } else {
-
+        cannon->setPosition(this->sprite.getPosition().x, this->sprite.getPosition().y);
     }
 }

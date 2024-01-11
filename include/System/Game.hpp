@@ -9,8 +9,11 @@
 #include "boat/BetaBoat.hpp"
 #include "boat/GammaBoat.hpp"
 #include "boat/DeltaBoat.hpp"
+#include "boat/OriginalEnemyBoat.hpp"
 #include "weapon/AlphaCannon.hpp"
+#include "weapon/BetaCannon.hpp"
 #include "weapon/DeltaCannon.hpp"
+#include "weapon/GammaCannon.hpp"
 #include "weapon/SimpleCannonBall.hpp"
 
 class Game {
@@ -20,8 +23,17 @@ private:
     sf::Event event;
 
     SimpleCannonBall simpleCannonBall;
-    DeltaCannon deltaCannon;
-    DeltaBoat player;
+    //DeltaCannon deltaCannon;
+    //DeltaBoat player;
+    
+    AlphaCannon alphaCannon;
+    AlphaBoat player;
+    //BetaCannon betaCannon;
+    //BetaBoat player;
+    //GammaCannon gammaCannon;
+    //GammaBoat player;
+    OriginalEnemyBoat enemy;
+    
 public:
     Game();
     virtual ~Game();
@@ -32,6 +44,11 @@ public:
     void updateInput();
     void update();
     void render();
+
+    //GUI
+    void quit();
+    sf::RenderWindow* getWindow();
+    void start();
 };
 
 #endif
