@@ -5,8 +5,8 @@
 int main()
 {
     // 設置環境變數
-    char widthEnv[] = "WINDOW_WIDTH=800";
-    char heightEnv[] = "WINDOW_HEIGHT=800";
+    char widthEnv[] = "WINDOW_WIDTH=1920";
+    char heightEnv[] = "WINDOW_HEIGHT=1080";
     putenv(widthEnv);
     putenv(heightEnv);
 
